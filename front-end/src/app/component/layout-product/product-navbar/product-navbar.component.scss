@@ -1,0 +1,102 @@
+.navbar-custom {
+  height: 3.12503rem;
+}
+.navbar-brand {
+  padding: 0;
+}
+.navbar-brand img {
+  height: 3rem;
+}
+.navbar.navbar-expand-md.navbar-light.fixed-top {
+  display: flex;
+  align-items: center;
+}
+.nav-item.dropdown.ml-md-auto.mr-md-3 {
+  width: 50%;
+}
+.navbar-input__search {
+  flex-wrap: unset;
+  > span {
+    position: absolute;
+    left: 10px;
+    top: 8px;
+    z-index: 99;
+    color: rgb(128, 128, 137);
+  }
+  > input {
+    position: relative;
+    border: 1px solid rgb(221, 221, 227);
+    border-radius: 8px;
+    -webkit-box-align: center;
+    padding: 0 0 0 40px;
+  }
+  > div > button {
+    cursor: pointer;
+    border: 0px;
+    width: 92px;
+    padding: 4px;
+    border-radius: 0px 8px 8px 0px;
+    background: transparent;
+    color: rgb(10, 104, 255);
+    border: 1px solid rgb(221, 221, 227);
+    height: 36px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    outline: none;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    position: relative;
+  }
+}
+.search__btn {
+  cursor: pointer;
+  border: 0px;
+  width: 92px;
+  height: 38px;
+  padding: 4px;
+  border-radius: 0px 8px 8px 0px;
+  background: transparent;
+  color: rgb(10, 104, 255);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 150%;
+  outline: none;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  position: relative;
+}
+.dropdown-search {
+  margin-top: 0;
+  border-top: 0;
+}
+li.nav-item.dropdown {
+  padding: 5px;
+}
+.navbar-nav-link {
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+}
+.navbar-nav-link:hover {
+  background-color: rgba(39, 39, 42, 0.12);
+}
+.user-btn {
+  padding: 5px 0.75rem;
+}
+@media (min-width: 768px) {
+  .navbar-expand-md .navbar-brand {
+    min-width: 14.4rem;
+  }
+}
+.dropdown-item > span {
+  font-size: 1rem;
+  margin-right: 1rem;
+}

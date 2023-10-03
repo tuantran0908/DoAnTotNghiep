@@ -1,0 +1,104 @@
+<div
+  class="sidebar sidebar-light sidebar-main sidebar-expand-md align-self-start"
+>
+  <!-- Sidebar mobile toggler -->
+  <div class="sidebar-mobile-toggler text-center">
+    <a href="#" class="sidebar-mobile-main-toggle">
+      <i class="icon-arrow-left8"></i>
+    </a>
+    <span class="font-weight-semibold">Main sidebar</span>
+    <a href="#" class="sidebar-mobile-expand">
+      <i class="icon-screen-full"></i>
+      <i class="icon-screen-normal"></i>
+    </a>
+  </div>
+  <!-- /sidebar mobile toggler -->
+
+  <!-- Sidebar content -->
+  <div class="sidebar-content">
+    <div class="card card-sidebar-mobile">
+      <!-- Header -->
+      <div class="card-header header-elements-inline">
+        <h6 class="card-title" *ngIf="user">
+          <div class="media" [routerLink]="['/profile', user.id]">
+            <div class="mr-3">
+              <img
+                src="data:image/png;base64,{{ user.avatar }}"
+                width="38"
+                height="38"
+                class="rounded-circle"
+                alt=""
+              />
+            </div>
+
+            <div class="media-body">
+              <div class="media-title font-weight-semibold">
+                {{ user.fullname }}
+              </div>
+            </div>
+          </div>
+        </h6>
+        <div class="header-elements">
+          <div class="list-icons">
+            <a class="list-icons-item" data-action="collapse"></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main navigation -->
+      <div class="card-body p-0">
+        <ul class="nav nav-sidebar" data-nav-type="accordion">
+          <!-- Main -->
+          <li class="nav-item-header mt-0">
+            <div class="text-uppercase font-size-xs line-height-xs">
+              Nổi bật
+            </div>
+          </li>
+          <ng-container *ngFor="let SideBarProduct of filterItemsOfType(1)">
+            <li class="nav-item">
+              <a
+                [routerLink]="SideBarProduct.url"
+                class="nav-link"
+                [class.active]="SideBarProduct.isSelected"
+                (click)="onClickSideBarItem(SideBarProduct)"
+              >
+                <div>
+                  <span class="material-icons sidebar-icon">{{
+                    SideBarProduct.icon
+                  }}</span>
+                </div>
+                <span>{{ SideBarProduct.title }}</span>
+              </a>
+            </li>
+          </ng-container>
+          <!-- /main -->
+
+          <!-- Layout -->
+          <li class="nav-item-header">
+            <div class="text-uppercase font-size-xs line-height-xs">
+              Phân loại
+            </div>
+          </li>
+          <ng-container *ngFor="let SideBarProduct of filterItemsOfType(2)">
+            <li class="nav-item">
+              <a
+                [routerLink]="SideBarProduct.url"
+                class="nav-link"
+                [class.active]="SideBarProduct.isSelected"
+                (click)="onClickSideBarItem(SideBarProduct)"
+              >
+                <div>
+                  <span class="material-icons sidebar-icon">category</span>
+                </div>
+                <span>{{ SideBarProduct.title }}</span>
+              </a>
+            </li>
+          </ng-container>
+          <!-- /layout -->
+        </ul>
+      </div>
+      <!-- /main navigation -->
+    </div>
+  </div>
+  <!-- /sidebar content -->
+</div>

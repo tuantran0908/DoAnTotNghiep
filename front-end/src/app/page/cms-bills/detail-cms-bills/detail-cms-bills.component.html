@@ -1,0 +1,117 @@
+<div class="box mb-32">
+  <div class="box-body flex-col-gap24">
+    <div class="row">
+      <div class="col-lg-6 flex-col-gap24">
+        <div class="row">
+          <div class="col-4 secondary-label">Họ và tên người thanh toán</div>
+          <div class="col-8 label">{{ billDetail.name }}</div>
+        </div>
+        <div class="row">
+          <div class="col-4 secondary-label">Số điện thoại</div>
+          <div class="col-8 label">{{ billDetail.phoneNumber }}</div>
+        </div>
+        <div class="row">
+          <div class="col-4 secondary-label">Trạng thái</div>
+          <div class="col-8 label">{{ billDetail.status }}</div>
+        </div>
+      </div>
+      <div class="mt-20 mt-lg-0 col-lg-6 flex-col-gap24">
+        <div class="row">
+          <div class="col-4 secondary-label">Địa chỉ</div>
+          <div class="col-8 label">{{ billDetail.address }}</div>
+        </div>
+        <div class="row">
+          <div class="col-4 secondary-label">Hình thức thanh toán</div>
+          <div class="col-8 label">{{ billDetail.payment }}</div>
+        </div>
+        <div class="row">
+          <div class="col-4 secondary-label">Ngày đặt hàng</div>
+          <div class="col-8 label">
+            {{ billDetail.createdAt | date : "short" }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bill-giaotrinh">
+      <div class="cart-list-item" *ngFor="let item of billDetail.billDetails">
+        <div class="align-items-center cart-product">
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="flex-row-gap12 align-items-center w-100">
+              <div class="flex-shrink-0">
+                <img
+                  src="data:image/png;base64,{{ item.giaoTrinh!.image }}"
+                  class="img-fluid"
+                  style="width: 100px"
+                />
+              </div>
+              <div class="flex-grow-1 ms-3">
+                <div class="product-name">{{ item.giaoTrinh!.name }}</div>
+                <div class="product-category">
+                  Phân loại giáo trình :
+                  <span>{{ item.giaoTrinh!.category!.name }}</span>
+                </div>
+                <div class="product-count">Số lượng x{{ item.quantity }}</div>
+                <span class="new-price"
+                  >Đơn giá :
+                  {{
+                    item.giaoTrinh!.price?.toFixed(0)
+                      | currency : "VND" : "symbol"
+                  }}
+                </span>
+              </div>
+            </div>
+            <span class="new-price"
+              >{{
+                (item.giaoTrinh!.sales && item.giaoTrinh!.price
+                  ? ((item.giaoTrinh!.price! * (100 - item.giaoTrinh!.sales!)) /
+                      100) *
+                    item.quantity!
+                  : item.giaoTrinh!.price! * item.quantity!
+                ).toFixed(0) | currency : "VND" : "symbol"
+              }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 flex-col-gap24">
+        <div class="row">
+          <div class="col-4 secondary-label">Người tạo</div>
+          <div class="col-8 label">
+            {{ billDetail.createdBy?.username }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4 secondary-label">Người cập nhật</div>
+          <div class="col-8 label">
+            {{ billDetail.updatedBy?.username }}
+          </div>
+        </div>
+      </div>
+      <div class="mt-20 mt-lg-0 col-lg-6 flex-col-gap24">
+        <div class="row">
+          <div class="col-4 secondary-label">Ngày tạo</div>
+          <div class="col-8 label">
+            {{ billDetail.createdAt | date : "short" }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4 secondary-label">Ngày cập nhật</div>
+          <div class="col-8 label">
+            {{ billDetail.updatedAt | date : "short" }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row flex-center gap-24">
+    <button appBackButton type="button" class="btn btn-cancel">Quay lại</button>
+    <button
+      class="btn btn-allow"
+      [routerLink]="['/cms/bills/update', billDetail.id]"
+    >
+      Sửa
+    </button>
+  </div>
+</div>

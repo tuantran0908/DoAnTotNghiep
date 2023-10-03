@@ -1,0 +1,62 @@
+<div class="login">
+  <div class="login-form">
+    <header class="login-header">
+      <img src="assets/images/logo.webp" alt="" class="login-form__logo" />
+      <div class="login-header__title">Đăng nhập</div>
+      <div class="login-header__subtitle">Chào mừng trở lại !</div>
+    </header>
+
+    <div class="login-content from-section form-vertical">
+      <form class="w-100" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-group mb-20">
+          <label for="username" class="label mb-6">Tên đăng nhập</label>
+          <input
+            type="text"
+            class="form-control form__input"
+            id="username"
+            aria-describedby="username"
+            placeholder="Nhập tên đăng nhập"
+            [(ngModel)]="loginRequest.username"
+            name="username"
+            formControlName="username"
+          />
+          <span
+            *ngIf="isSubmit && loginForm.controls.username?.errors?.['required']"
+            class="text-danger rq-input"
+            >Thông tin bắt buộc</span
+          >
+        </div>
+        <div class="form-group mb-20">
+          <label for="password" class="label mb-6">Mật khẩu</label>
+          <input
+            type="password"
+            class="form-control form__input"
+            id="password"
+            placeholder="Nhập mật khẩu"
+            [(ngModel)]="loginRequest.password"
+            name="password"
+            formControlName="password"
+          />
+          <span
+            *ngIf="isSubmit && loginForm.controls.password?.errors?.['required']"
+            class="text-danger rq-input"
+            >Thông tin bắt buộc</span
+          >
+        </div>
+        <div class="d-flex mb-5 align-items-center">
+          <label class="control control--checkbox mb-0"
+            ><span class="caption">Remember me</span>
+            <input type="checkbox" checked="checked" />
+            <div class="control__indicator"></div>
+          </label>
+          <span class="ml-auto"
+            ><a href="#" class="forgot-pass">Forgot Password</a></span
+          >
+        </div>
+        <button type="submit" class="btn form-btn__submit w-100 mb-24">
+          Đăng nhập
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

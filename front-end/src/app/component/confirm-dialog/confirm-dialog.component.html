@@ -1,0 +1,30 @@
+<div class="confirm-dialog">
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLongTitle">{{ data.title }}</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span class="close-btn" (click)="closeDialog()">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="icon-box">
+      <i class="material-icons">&#xE5CD;</i>
+    </div>
+    <h4 class="modal-title__content w-100">Are you sure?</h4>
+    <p class="txt-content">
+      Bạn có chắc chắn muốn xóa bản ghi
+      <span>
+        <b>"{{ data.name }}"</b>
+      </span>
+      này?
+    </p>
+    <p class="txt-warning">Hành động này sẽ không thể hoàn tác.</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" [mat-dialog-close]="false" class="btn btn-cancel">
+      Quay lại
+    </button>
+    <button type="button" class="btn btn-allow" [mat-dialog-close]="true">
+      Tiếp tục
+    </button>
+  </div>
+</div>

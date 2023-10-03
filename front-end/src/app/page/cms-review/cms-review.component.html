@@ -1,0 +1,176 @@
+<div class="box mb-32">
+  <div class="box-body">
+    <form [formGroup]="searchForm" (ngSubmit)="search(1)">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label class="label"> Người nhận xét </label>
+            <app-ngselect
+              [service]="userService"
+              [(ngModel)]="usersSelected"
+              formControlName="user"
+            ></app-ngselect>
+          </div>
+          <div class="form-group">
+            <label class="label"> Giáo trình </label>
+            <app-ngselect
+              [service]="productsService"
+              [(ngModel)]="productsSelected"
+              formControlName="giaoTrinh"
+            ></app-ngselect>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label for="message" class="label"> Nhận xét </label>
+            <input
+              type="text"
+              class="form-control"
+              id="message"
+              placeholder="Nhập nhận xét"
+              [(ngModel)]="reviewSearch.message"
+              formControlName="message"
+            />
+          </div>
+          <div class="form-group position-relative">
+            <label class="label"> Sao </label>
+            <div class="rate position-absolute">
+              <input
+                type="radio"
+                id="5"
+                name="rate"
+                value="5"
+                (click)="onChecked(5)"
+              />
+              <label for="5" title="text">5 stars</label>
+              <input
+                type="radio"
+                id="4"
+                name="rate"
+                value="4"
+                (click)="onChecked(4)"
+              />
+              <label for="4" title="text">4 stars</label>
+              <input
+                type="radio"
+                id="3"
+                name="rate"
+                value="3"
+                (click)="onChecked(3)"
+              />
+              <label for="3" title="text">3 stars</label>
+              <input
+                type="radio"
+                id="2"
+                name="rate"
+                value="2"
+                (click)="onChecked(2)"
+              />
+              <label for="2" title="text">2 stars</label>
+              <input
+                type="radio"
+                id="1"
+                name="rate"
+                value="1"
+                (click)="onChecked(1)"
+              />
+              <label for="1" title="text">1 star</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary btn-icon">
+          <span class="material-symbols-outlined"> search </span>
+          Tìm kiếm
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="box">
+  <div class="table-wrapper">
+    <table class="table">
+      <thead>
+        <th class="stt">STT</th>
+        <th>Họ và tên người nhận xét</th>
+        <th>Giáo trình</th>
+        <th class="w-112">Hình ảnh</th>
+        <th class="w-500">Nội dung</th>
+        <th>Số sao</th>
+        <th>Ngày tạo</th>
+        <th>Người tạo</th>
+        <th>Ngày cập nhật</th>
+        <th>Người cập nhật</th>
+        <th class="fix fix-right">
+          <div class="fixed-column">Thao tác</div>
+        </th>
+      </thead>
+      <tbody *ngIf="asyncData">
+        <tr
+          *ngFor="
+            let item of asyncData
+              | paginate
+                : {
+                    id: 'server',
+                    itemsPerPage: page.size,
+                    currentPage: page.curentPage,
+                    totalItems: total
+                  };
+            let i = index
+          "
+        >
+          <td class="stt">{{ getCurrentPageNumber(i + 1) }}</td>
+          <td>{{ item.user!.fullname }}</td>
+          <td>{{ item.giaoTrinh!.name }}</td>
+          <td class="w-112">
+            <img src="data:image/png;base64,{{ item.giaoTrinh!.image }}" />
+          </td>
+          <td class="w-500">
+            <p class="text-3-line">{{ item.message }}</p>
+          </td>
+          <td>{{ item.star }}</td>
+          <td>{{ item.createdAt | date : "short" }}</td>
+          <td>{{ item.createdBy?.username }}</td>
+          <td>{{ item.updatedAt | date : "short" }}</td>
+          <td>{{ item.updatedBy?.username }}</td>
+          <td class="fix fix-right">
+            <div class="fixed-column">
+              <a
+                class="fixed-icon flex-center"
+                [routerLink]="['./detail/', item.id]"
+              >
+                <span class="material-symbols-outlined"> info </span>
+              </a>
+              <a
+                class="fixed-icon flex-center"
+                [routerLink]="['./update/', item.id]"
+              >
+                <span class="material-symbols-outlined"> edit_note </span>
+              </a>
+              <a
+                class="fixed-icon flex-center"
+                (click)="
+                  confirmDelete(item.id, getCurrentPageNumber(i + 1).toString())
+                "
+              >
+                <span class="material-symbols-outlined" style="color: #fda601">
+                  delete
+                </span>
+              </a>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <pagination-controls
+    id="server"
+    [maxSize]="maxSize"
+    [autoHide]="autoHide"
+    [responsive]="responsive"
+    [previousLabel]="labels.previousLabel"
+    [nextLabel]="labels.nextLabel"
+    (pageChange)="search($event)"
+  ></pagination-controls>
+</div>

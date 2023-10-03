@@ -1,0 +1,84 @@
+.rate {
+  span {
+    font-size: 18px;
+  }
+  .checked {
+    color: #ffc700;
+  }
+}
+.banner {
+  position: relative;
+  display: flex;
+}
+.banner__main-banner {
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05);
+  border-radius: 0.125rem;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  overflow: hidden;
+  flex-grow: 2;
+  flex-shrink: 1;
+  flex-basis: 0;
+}
+.banner__right-banner {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 0.3125rem;
+  img {
+    height: 146px;
+    width: 100%;
+  }
+}
+a.banner__right-banner:last-child {
+  margin-top: 0.3125rem;
+  border-bottom-right-radius: 2px;
+  overflow: hidden;
+}
+::ng-deep .owl-theme .owl-dots {
+  position: absolute;
+  bottom: 15px;
+  left: 0;
+  right: 0;
+}
+
+::ng-deep .owl-theme .owl-dots .owl-dot span {
+  width: 24px;
+  height: 4px;
+  background: #eaebec !important;
+  border-radius: 100px;
+}
+
+::ng-deep .owl-theme .owl-dots .owl-dot.active span,
+.owl-theme .owl-dots .owl-dot:hover span {
+  background: #fda601 !important;
+  border: 0.5px solid #f4f5f6;
+}
+::ng-deep .owl-theme .owl-nav > div {
+  padding: 5px !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+::ng-deep .owl-theme .owl-nav .owl-prev {
+  top: 50%;
+  transform: translate(0, -100%);
+  position: absolute;
+  left: 0;
+}
+::ng-deep .owl-theme .owl-nav .owl-next {
+  top: 50%;
+  transform: translate(0, -100%);
+  position: absolute;
+  right: 0;
+}
+.box-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
+  grid-gap: 10px;
+}

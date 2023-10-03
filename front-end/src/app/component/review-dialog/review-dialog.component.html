@@ -1,0 +1,98 @@
+<div class="review-dialog">
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLongTitle">{{ data.title }}</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span class="close-btn" (click)="closeDialog()">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div
+      class="review-list-item"
+      *ngFor="let item of data.billDetails; let i = index"
+    >
+      <div class="review-product flex-col-gap12">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="flex-row-gap12 align-items-center w-100">
+            <div class="flex-shrink-0">
+              <img
+                src="data:image/png;base64,{{ item.giaoTrinh!.image }}"
+                class="img-fluid"
+                style="width: 60px"
+              />
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <div class="product-name">{{ item.giaoTrinh!.name }}</div>
+              <div class="product-category">
+                Phân loại giáo trình :
+                <span>{{ item.giaoTrinh!.category!.name }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="reviews-counter d-flex align-items-center label">
+          Chất lượng sản phẩm
+          <div class="rate ml-2">
+            <input
+              type="radio"
+              [id]="i + '5'"
+              [name]="i + 'rate'"
+              value="5"
+              (click)="onChecked(item, '5')"
+            />
+            <label [for]="i + '5'" title="text">5 stars</label>
+            <input
+              type="radio"
+              [id]="i + '4'"
+              [name]="i + 'rate'"
+              value="4"
+              (click)="onChecked(item, '4')"
+            />
+            <label [for]="i + '4'" title="text">4 stars</label>
+            <input
+              type="radio"
+              [id]="i + '3'"
+              [name]="i + 'rate'"
+              value="3"
+              (click)="onChecked(item, '3')"
+            />
+            <label [for]="i + '3'" title="text">3 stars</label>
+            <input
+              type="radio"
+              [id]="i + '2'"
+              [name]="i + 'rate'"
+              value="2"
+              (click)="onChecked(item, '2')"
+            />
+            <label [for]="i + '2'" title="text">2 stars</label>
+            <input
+              type="radio"
+              [id]="i + '1'"
+              [name]="i + 'rate'"
+              value="1"
+              (click)="onChecked(item, '1')"
+            />
+            <label [for]="i + '1'" title="text">1 star</label>
+          </div>
+        </div>
+        <div class="form-group review-comment">
+          <label for="exampleInputEmail1" class="label">Nhận xét</label>
+          <textarea
+            class="form-control"
+            placeholder="Hãy chia sẻ cảm nhận của bạn về giáo trình này với những người mua khác nhé"
+            rows="4"
+            autosize
+            [(ngModel)]="item.message"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" [mat-dialog-close]="false" class="btn btn-cancel">
+      Quay lại
+    </button>
+    <button type="button" class="btn btn-allow" [mat-dialog-close]="true">
+      Tiếp tục
+    </button>
+  </div>
+</div>

@@ -1,0 +1,192 @@
+<div class="box mb-32">
+  <div class="box-body">
+    <form [formGroup]="searchForm" (ngSubmit)="search(1)">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label for="fullname" class="label">
+              Tên đầy đủ / Tên đăng nhập
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              id="fullname"
+              placeholder="Nhập tên đầy đủ/tên đăng nhập"
+              [(ngModel)]="userSearch.name"
+              formControlName="name"
+            />
+          </div>
+          <div class="form-group">
+            <label class="label"> Nhóm quyền </label>
+            <app-ngselect
+              [service]="rolesGroupService"
+              [(ngModel)]="rolesGroupSelected"
+              formControlName="rolesGroup"
+            ></app-ngselect>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label class="label"> Trạng thái </label>
+            <ng-select
+              [(ngModel)]="userSearch.status"
+              formControlName="status"
+              [items]="statusList"
+              bindLabel="label"
+              bindValue="value"
+            ></ng-select>
+          </div>
+          <div class="form-group">
+            <label class="label"> Khoảng thời gian </label>
+            <div class="row">
+              <div class="col-6">
+                <div class="input-group">
+                  <input
+                    class="form-control"
+                    placeholder="dd/mm/yyyy"
+                    name="createdAtFrom"
+                    id="createdAtFrom"
+                    [(ngModel)]="userSearch.createdAtFrom"
+                    ngbDatepicker
+                    #from="ngbDatepicker"
+                    formControlName="createdAtFrom"
+                  />
+                  <div class="input-group-append">
+                    <span
+                      class="material-symbols-outlined calendar_icon"
+                      (click)="from.toggle()"
+                    >
+                      calendar_month
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="input-group">
+                  <input
+                    class="form-control"
+                    placeholder="dd/mm/yyyy"
+                    name="createdAtTo"
+                    id="createdAtTo"
+                    [(ngModel)]="userSearch.createdAtTo"
+                    ngbDatepicker
+                    #to="ngbDatepicker"
+                    formControlName="createdAtTo"
+                  />
+                  <div class="input-group-append">
+                    <span
+                      class="material-symbols-outlined calendar_icon"
+                      (click)="to.toggle()"
+                    >
+                      calendar_month
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary btn-icon">
+          <span class="material-symbols-outlined"> search </span>
+          Tìm kiếm
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="box">
+  <div class="d-flex flex-row gap-24 justify-content-end">
+    <button
+      type="button"
+      class="btn btn-primary btn-icon"
+      [routerLink]="['./create']"
+    >
+      <span class="material-symbols-outlined"> add </span>
+      Thêm mới
+    </button>
+  </div>
+  <div class="table-wrapper">
+    <table class="table">
+      <thead>
+        <th class="stt">STT</th>
+        <th>Tên đầy đủ</th>
+        <th>User đăng nhập</th>
+        <th>Email</th>
+        <th>Số điện thoại</th>
+        <th>Giới tính</th>
+        <th>Ngày sinh</th>
+        <th>Trạng thái</th>
+        <th>Ngày tạo</th>
+        <th>Người tạo</th>
+        <th>Ngày cập nhật</th>
+        <th>Người cập nhật</th>
+        <th class="fix fix-right">
+          <div class="fixed-column">Thao tác</div>
+        </th>
+      </thead>
+      <tbody *ngIf="asyncData">
+        <tr
+          *ngFor="
+            let item of asyncData
+              | paginate
+                : {
+                    id: 'server',
+                    itemsPerPage: page.size,
+                    currentPage: page.curentPage,
+                    totalItems: total
+                  };
+            let i = index
+          "
+        >
+          <td class="stt">{{ getCurrentPageNumber(i + 1) }}</td>
+          <td>{{ item.fullname }}</td>
+          <td>{{ item.username }}</td>
+          <td>{{ item.email }}</td>
+          <td>{{ item.phoneNumber }}</td>
+          <td>{{ item.gender }}</td>
+          <td>{{ item.birthday }}</td>
+          <td>{{ item.status }}</td>
+          <td>{{ item.createdAt | date : "short" }}</td>
+          <td>{{ item.createdBy?.username }}</td>
+          <td>{{ item.updatedAt | date : "short" }}</td>
+          <td>{{ item.updatedBy?.username }}</td>
+          <td class="fix fix-right">
+            <div class="fixed-column">
+              <a
+                class="fixed-icon flex-center"
+                [routerLink]="['./detail/', item.id]"
+              >
+                <span class="material-symbols-outlined"> info </span>
+              </a>
+              <a
+                class="fixed-icon flex-center"
+                [routerLink]="['./update/', item.id]"
+              >
+                <span class="material-symbols-outlined"> edit_note </span>
+              </a>
+              <a
+                class="fixed-icon flex-center"
+                (click)="confirmDelete(item.id, item.fullname)"
+              >
+                <span class="material-symbols-outlined" style="color: #fda601">
+                  delete
+                </span>
+              </a>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <pagination-controls
+    id="server"
+    [maxSize]="maxSize"
+    [autoHide]="autoHide"
+    [responsive]="responsive"
+    [previousLabel]="labels.previousLabel"
+    [nextLabel]="labels.nextLabel"
+    (pageChange)="search($event)"
+  ></pagination-controls>
+</div>

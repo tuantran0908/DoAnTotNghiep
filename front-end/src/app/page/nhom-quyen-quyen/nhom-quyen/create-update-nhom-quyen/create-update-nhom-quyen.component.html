@@ -1,0 +1,105 @@
+<form [formGroup]="detailForm" (ngSubmit)="submitDetail()">
+  <div class="box mb-32">
+    <div class="box-body">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label class="label"> Mã nhóm quyền </label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="rolesGroupDetail.id"
+              [readonly]="!isCreate()"
+              formControlName="id"
+            />
+          </div>
+          <div class="form-group">
+            <label for="name" class="label"> Tên nhóm quyền </label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              [(ngModel)]="rolesGroupDetail.name"
+              [readonly]="isReadOnly()"
+              placeholder="Nhập tên nhóm quyền"
+              formControlName="name"
+            />
+            <span
+              *ngIf="isSubmit && detailForm.controls.name?.errors?.['required']"
+              class="text-danger rq-input"
+              >Thông tin bắt buộc</span
+            >
+          </div>
+          <div class="form-group">
+            <label class="label"> Trạng thái </label>
+            <div class="col label">
+              <label class="toggle-switch">
+                <input
+                  type="checkbox"
+                  [(ngModel)]="rolesGroupStatus"
+                  formControlName="status"
+                />
+                <div class="slider"></div>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="mt-20 mt-lg-0 col-lg-6">
+          <div class="form-group">
+            <label for="description" class="label"> Mô tả </label>
+            <textarea
+              autosize
+              rows="4"
+              class="form-control"
+              id="description"
+              [(ngModel)]="rolesGroupDetail.description"
+              [readonly]="isReadOnly()"
+              placeholder="Nhập mô tả"
+              formControlName="description"
+            ></textarea>
+            <span
+              *ngIf="isSubmit && detailForm.controls.description?.errors?.['required']"
+              class="text-danger rq-input"
+              >Thông tin bắt buộc</span
+            >
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="label"> Nhóm quyền </label>
+        <div class="col-lg-11 role-table">
+          <div class="row role-table__header">
+            <div class="flex-center">Quyền</div>
+          </div>
+          <div class="role-table__content">
+            <div
+              class="row function parent-function"
+              *ngFor="let role of rolesList"
+            >
+              <input
+                [disabled]="isReadOnly()"
+                type="checkbox"
+                (change)="onChangeInput(role)"
+                [checked]="role.value"
+                [attr.id]="rolesList.indexOf(role)"
+                class="mr-6"
+              />
+              <label
+                class="form-check-label"
+                [attr.for]="rolesList.indexOf(role)"
+              >
+                {{ role.name }}
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row flex-center gap-24">
+      <button appBackButton type="button" class="btn btn-cancel">
+        Quay lại
+      </button>
+      <button type="submit" class="btn btn-allow">Lưu</button>
+    </div>
+  </div>
+</form>

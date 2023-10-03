@@ -1,0 +1,140 @@
+<div class="box mb-32">
+  <div class="box-body">
+    <form [formGroup]="searchForm" (ngSubmit)="search(1)">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label for="name" class="label"> Họ và tên </label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              placeholder="Nhập họ và tên người thanh toán"
+              [(ngModel)]="billSearch.name"
+              formControlName="name"
+            />
+          </div>
+          <div class="form-group">
+            <label class="label"> Trạng thái </label>
+            <ng-select
+              [(ngModel)]="billSearch.status"
+              formControlName="status"
+              [items]="statusList"
+              bindLabel="label"
+              bindValue="value"
+            ></ng-select>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label for="phoneNumber" class="label"> Số điện thoại </label>
+            <input
+              type="text"
+              class="form-control"
+              id="phoneNumber"
+              placeholder="Nhập số điện thoại liên hệ"
+              [(ngModel)]="billSearch.phoneNumber"
+              formControlName="phoneNumber"
+            />
+          </div>
+          <div class="form-group">
+            <label class="label"> Hình thức thanh toán </label>
+            <ng-select
+              [(ngModel)]="billSearch.payment"
+              formControlName="payment"
+              [items]="paymentList"
+              bindLabel="label"
+              bindValue="value"
+            ></ng-select>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary btn-icon">
+          <span class="material-symbols-outlined"> search </span>
+          Tìm kiếm
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="box">
+  <div class="table-wrapper">
+    <table class="table">
+      <thead>
+        <th class="stt">STT</th>
+        <th>Họ và tên người thanh toán</th>
+        <th>Số điện thoại</th>
+        <th>Hình thức thanh toán</th>
+        <th>Trạng thái</th>
+        <th>Ngày tạo</th>
+        <th>Người tạo</th>
+        <th>Ngày cập nhật</th>
+        <th>Người cập nhật</th>
+        <th class="fix fix-right">
+          <div class="fixed-column">Thao tác</div>
+        </th>
+      </thead>
+      <tbody *ngIf="asyncData">
+        <tr
+          *ngFor="
+            let item of asyncData
+              | paginate
+                : {
+                    id: 'server',
+                    itemsPerPage: page.size,
+                    currentPage: page.curentPage,
+                    totalItems: total
+                  };
+            let i = index
+          "
+        >
+          <td class="stt">{{ getCurrentPageNumber(i + 1) }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.phoneNumber }}</td>
+          <td>{{ item.payment }}</td>
+          <td>{{ item.status }}</td>
+          <td>{{ item.createdAt | date : "short" }}</td>
+          <td>{{ item.createdBy?.username }}</td>
+          <td>{{ item.updatedAt | date : "short" }}</td>
+          <td>{{ item.updatedBy?.username }}</td>
+          <td class="fix fix-right">
+            <div class="fixed-column">
+              <a
+                class="fixed-icon flex-center"
+                [routerLink]="['./detail/', item.id]"
+              >
+                <span class="material-symbols-outlined"> info </span>
+              </a>
+              <a
+                class="fixed-icon flex-center"
+                [routerLink]="['./update/', item.id]"
+              >
+                <span class="material-symbols-outlined"> edit_note </span>
+              </a>
+              <a
+                class="fixed-icon flex-center"
+                (click)="
+                  confirmDelete(item.id, getCurrentPageNumber(i + 1).toString())
+                "
+              >
+                <span class="material-symbols-outlined" style="color: #fda601">
+                  delete
+                </span>
+              </a>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <pagination-controls
+    id="server"
+    [maxSize]="maxSize"
+    [autoHide]="autoHide"
+    [responsive]="responsive"
+    [previousLabel]="labels.previousLabel"
+    [nextLabel]="labels.nextLabel"
+    (pageChange)="search($event)"
+  ></pagination-controls>
+</div>

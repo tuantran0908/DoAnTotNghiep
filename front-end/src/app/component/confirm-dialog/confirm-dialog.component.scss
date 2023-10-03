@@ -1,0 +1,35 @@
+.confirm-dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border-radius: 10px;
+  border: 1px solid var(--secondary-color);
+  min-width: 500px;
+}
+.icon-box {
+  font-size: 40px;
+  color: var(--red-D50101);
+  border: 1px solid var(--red-D50101);
+  border-radius: 50%;
+  padding: 20px;
+}
+.close-btn {
+  font-size: 30px;
+}
+.txt-warning {
+  color: var(--red-D50101);
+  font-size: 18px;
+}
+.txt-content {
+  color: var(--secondary-color);
+  font-size: 16px;
+}
+.modal-title__content {
+  font-weight: 600;
+  line-height: 24px;
+  color: var(--primary-color);
+  font-size: 30px;
+  margin: 10px 0;
+}

@@ -1,0 +1,320 @@
+<div class="page-content pt-0">
+  <div
+    class="sidebar sidebar-light sidebar-main sidebar-expand-md align-self-start"
+  >
+    <!-- Sidebar mobile toggler -->
+    <div class="sidebar-mobile-toggler text-center">
+      <a href="#" class="sidebar-mobile-secondary-toggle">
+        <i class="icon-arrow-left8"></i>
+      </a>
+      <span class="font-weight-semibold">Secondary sidebar</span>
+      <a href="#" class="sidebar-mobile-expand">
+        <i class="icon-screen-full"></i>
+        <i class="icon-screen-normal"></i>
+      </a>
+    </div>
+    <!-- /sidebar mobile toggler -->
+
+    <!-- Sidebar content -->
+    <form [formGroup]="searchForm" (ngSubmit)="search(1)">
+      <div class="sidebar-content">
+        <!-- Sidebar search -->
+        <div class="card sidebar-content__title">
+          <div class="card-header d-flex align-items-center">
+            <span class="material-symbols-outlined"> filter_alt </span>
+            BỘ LỌC TÌM KIẾM
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header header-elements-inline">
+            <h6 class="card-title">Tìm kiếm theo tên</h6>
+          </div>
+          <div class="card-body">
+            <div class="form-group-feedback form-group-feedback-right">
+              <input
+                type="search"
+                class="form-control"
+                placeholder="Nhập tên giáo trình"
+                [(ngModel)]="giaoTrinhSearch.name"
+                formControlName="name"
+              />
+              <div class="form-control-feedback">
+                <i class="icon-search4 font-size-base text-muted"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /sidebar search -->
+
+        <div class="card">
+          <div class="card-header header-elements-inline">
+            <h6 class="card-title">Tìm kiếm theo tác giả</h6>
+          </div>
+
+          <div class="card-body">
+            <div class="form-group-feedback form-group-feedback-right">
+              <input
+                type="search"
+                class="form-control"
+                placeholder="Nhập tên giáo trình"
+                [(ngModel)]="giaoTrinhSearch.author"
+                formControlName="author"
+              />
+              <div class="form-control-feedback">
+                <i class="icon-search4 font-size-base text-muted"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header header-elements-inline">
+            <h6 class="card-title">Tìm kiếm theo giá</h6>
+          </div>
+
+          <div class="card-body">
+            <div
+              class="flex-row-gap12 form-group-feedback form-group-feedback-right"
+            >
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Từ"
+                [(ngModel)]="giaoTrinhSearch.priceFrom"
+                formControlName="priceFrom"
+              />
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Đến"
+                [(ngModel)]="giaoTrinhSearch.priceTo"
+                formControlName="priceTo"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header header-elements-inline">
+            <h6 class="card-title">Tìm kiếm theo đánh giá</h6>
+          </div>
+
+          <div class="card-body">
+            <div class="form-group-feedback form-group-feedback-right">
+              <div class="rate">
+                <input
+                  type="radio"
+                  id="5"
+                  name="rate"
+                  value="5"
+                  (click)="onChecked(5)"
+                />
+                <label for="5" title="text">5 stars</label>
+                <input
+                  type="radio"
+                  id="4"
+                  name="rate"
+                  value="4"
+                  (click)="onChecked(4)"
+                />
+                <label for="4" title="text">4 stars</label>
+                <input
+                  type="radio"
+                  id="3"
+                  name="rate"
+                  value="3"
+                  (click)="onChecked(3)"
+                />
+                <label for="3" title="text">3 stars</label>
+                <input
+                  type="radio"
+                  id="2"
+                  name="rate"
+                  value="2"
+                  (click)="onChecked(2)"
+                />
+                <label for="2" title="text">2 stars</label>
+                <input
+                  type="radio"
+                  id="1"
+                  name="rate"
+                  value="1"
+                  (click)="onChecked(1)"
+                />
+                <label for="1" title="text">1 star</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row flex-center gap-24">
+          <button type="button" class="btn btn-cancel" (click)="onClear()">
+            Xóa tất cả
+          </button>
+          <button
+            type="button"
+            class="btn btn-allow"
+            (click)="search(page.curentPage)"
+          >
+            Áp dụng
+          </button>
+        </div>
+      </div>
+    </form>
+    <!-- /sidebar content -->
+  </div>
+  <div class="content-wrapper">
+    <div class="contents">
+      <div class="banner">
+        <div class="banner__main-banner">
+          <owl-carousel-o [options]="customOptionsBanner">
+            <ng-container *ngFor="let banner of banners">
+              <ng-template
+                class="slide"
+                carouselSlide
+                [id]="banner.id!.toString()"
+              >
+                <img [src]="banner.url" style="height: 300px" />
+              </ng-template>
+            </ng-container>
+          </owl-carousel-o>
+        </div>
+        <div class="banner__right-banner">
+          <a href="" class="banner__right-banner">
+            <img src="assets/images/banner_7.jpg" alt="" />
+          </a>
+          <a href="" class="banner__right-banner">
+            <img src="assets/images/banner_8.jpg" alt="" />
+          </a>
+        </div>
+      </div>
+      <section class="mt-32 box-product">
+        <div class="box-product__header">
+          <div class="box-product__header__title">
+            <span class="text-uppercase">{{ titleCategory }}</span>
+          </div>
+          <div class="box-product__header__sort flex-center">
+            Sắp xếp theo
+            <button
+              class="btn btn-allow btn_sort flex-center"
+              [class.deactive]="optionSearch != 'lien-quan'"
+              (click)="onClickOptionSearch('lien-quan')"
+            >
+              Liên quan
+            </button>
+            <button
+              class="btn btn-allow btn_sort flex-center"
+              [class.deactive]="optionSearch != 'moi-nhat'"
+              (click)="onClickOptionSearch('moi-nhat')"
+            >
+              Mới nhất
+            </button>
+            <button
+              class="btn btn-allow btn_sort flex-center"
+              [class.deactive]="optionSearch != 'ban-chay'"
+              (click)="onClickOptionSearch('ban-chay')"
+            >
+              Bán chạy
+            </button>
+          </div>
+        </div>
+        <div *ngIf="asyncData" class="box-product__content">
+          <div class="box-grid">
+            <div
+              class="product"
+              *ngFor="
+                let product of asyncData
+                  | paginate
+                    : {
+                        id: 'server',
+                        itemsPerPage: page.size,
+                        currentPage: page.curentPage,
+                        totalItems: total
+                      }
+              "
+            >
+              <div
+                class="product__image"
+                [routerLink]="['/product', product.id]"
+              >
+                <span *ngIf="product.sales" class="discount"
+                  >{{ product.sales }}% off</span
+                >
+                <span class="new">new</span>
+                <!-- <div class="">{{ product.image }}</div> -->
+                <img src="data:image/png;base64,{{ product.image }}" />
+                <!-- <img [src]="product.image" /> -->
+              </div>
+              <div
+                class="product__detail"
+                [routerLink]="['/product', product.id]"
+              >
+                <p class="product-title">{{ product.name }}</p>
+                <div
+                  class="d-flex"
+                  *ngIf="product.sales && product.price; else elsePrice"
+                >
+                  <p class="product-old-price">
+                    {{ product.price.toFixed(0) | currency : "VND" : "symbol" }}
+                  </p>
+                  <p class="product-price">
+                    {{
+                      ((product.price! * (100 - product.sales!)) / 100).toFixed(
+                        0
+                      ) | currency : "VND" : "symbol"
+                    }}
+                  </p>
+                </div>
+                <ng-template #elsePrice>
+                  <div class="d-flex">
+                    <p class="product-price">
+                      {{
+                        product.price!.toFixed(0) | currency : "VND" : "symbol"
+                      }}
+                    </p>
+                  </div>
+                </ng-template>
+                <div class="product-review">
+                  <div class="rate">
+                    <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+                      <span
+                        class="material-icons"
+                        [class.checked]="
+                          product.avgStar && star <= product.avgStar
+                        "
+                      >
+                        star_rate
+                      </span>
+                    </ng-container>
+                  </div>
+                  <p class="product-quantity-sell">
+                    Đã bán {{ convertUnits(product.quantitySell!) }}
+                  </p>
+                </div>
+              </div>
+              <div class="product__btn">
+                <button
+                  class="btn btn-allow flex-center"
+                  (click)="onClickAddToCart(product)"
+                >
+                  <span class="material-icons-outlined"> shopping_cart </span>
+                  Thêm vào giỏ hàng
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-32 flex-center box-product__more">
+          <pagination-controls
+            id="server"
+            [maxSize]="maxSize"
+            [autoHide]="autoHide"
+            [responsive]="responsive"
+            [previousLabel]="labels.previousLabel"
+            [nextLabel]="labels.nextLabel"
+            (pageChange)="search($event)"
+          ></pagination-controls>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>

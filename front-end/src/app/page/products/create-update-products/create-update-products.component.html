@@ -1,0 +1,280 @@
+<form [formGroup]="detailForm" (ngSubmit)="submitDetail()">
+  <div class="box mb-32">
+    <div class="box-body">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label class="label"> Mã giáo trình </label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="giaoTrinhDetail.id"
+              [readonly]="!isCreate()"
+              formControlName="id"
+            />
+          </div>
+          <div class="form-group">
+            <label class="label"> Loại giáo trình </label>
+            <app-ngselect
+              [service]="categoryService"
+              [(ngModel)]="categorySelected"
+              formControlName="category"
+              [multiple]="false"
+            >
+            </app-ngselect>
+            <span
+              *ngIf="isSubmit && detailForm.controls.category?.errors?.['required']"
+              class="text-danger rq-input"
+              >Thông tin bắt buộc</span
+            >
+          </div>
+          <div class="form-group">
+            <label for="name" class="label"> Tên giáo trình </label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              [(ngModel)]="giaoTrinhDetail.name"
+              [readonly]="isReadOnly()"
+              placeholder="Nhập tên giáo trình"
+              formControlName="name"
+            />
+            <span
+              *ngIf="isSubmit && detailForm.controls.name?.errors?.['required']"
+              class="text-danger rq-input"
+              >Thông tin bắt buộc</span
+            >
+          </div>
+          <div class="form-group">
+            <label for="author" class="label"> Tác giả </label>
+            <input
+              type="text"
+              class="form-control"
+              id="author"
+              [(ngModel)]="giaoTrinhDetail.author"
+              [readonly]="isReadOnly()"
+              placeholder="Nhập tên tác giả"
+              formControlName="author"
+            />
+            <span
+              *ngIf="isSubmit && detailForm.controls.author?.errors?.['required']"
+              class="text-danger rq-input"
+              >Thông tin bắt buộc</span
+            >
+          </div>
+          <div class="form-group">
+            <label for="price" class="label"> Giá bán </label>
+            <input
+              type="text"
+              class="form-control"
+              id="price"
+              [(ngModel)]="giaoTrinhDetail.price"
+              [readonly]="isReadOnly()"
+              placeholder="Nhập giá"
+              formControlName="price"
+            />
+            <span
+              *ngIf="isSubmit && detailForm.controls.price?.errors?.['required']"
+              class="text-danger rq-input"
+              >Thông tin bắt buộc</span
+            >
+          </div>
+          <div class="form-group">
+            <label for="sales" class="label"> Khuyến mãi </label>
+            <input
+              type="text"
+              class="form-control"
+              id="sales"
+              [(ngModel)]="giaoTrinhDetail.sales"
+              [readonly]="isReadOnly()"
+              placeholder="Nhập giá"
+              formControlName="sales"
+            />
+            <span
+              *ngIf="isSubmit && detailForm.controls.sales?.errors?.['required']"
+              class="text-danger rq-input"
+              >Thông tin bắt buộc</span
+            >
+          </div>
+          <div class="form-group">
+            <label class="label"> Tình trạng </label>
+            <ng-select
+              [(ngModel)]="giaoTrinhDetail.isNew"
+              formControlName="isNew"
+              [items]="isNewList"
+              bindLabel="label"
+              bindValue="value"
+            ></ng-select>
+            <span
+              *ngIf="isSubmit && detailForm.controls.isNew?.errors?.['required']"
+              class="text-danger rq-input"
+              >Thông tin bắt buộc</span
+            >
+          </div>
+          <div class="form-group">
+            <label class="label"> Trạng thái </label>
+            <div class="col label">
+              <label class="toggle-switch">
+                <input
+                  type="checkbox"
+                  [(ngModel)]="giaoTrinhStatus"
+                  formControlName="status"
+                />
+                <div class="slider"></div>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="mt-20 mt-lg-0 col-lg-6">
+          <div class="form-group">
+            <label class="label"> Kích thước </label>
+            <div class="row">
+              <div class="col-4">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="giaoTrinhDetail.length"
+                  [readonly]="isReadOnly()"
+                  placeholder="Nhập chiều dài"
+                  formControlName="length"
+                />
+                <span
+                  *ngIf="isSubmit && detailForm.controls.length?.errors?.['required']"
+                  class="text-danger rq-input"
+                  >Thông tin bắt buộc</span
+                >
+              </div>
+              <div class="col-4">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="giaoTrinhDetail.width"
+                  [readonly]="isReadOnly()"
+                  placeholder="Nhập chiều rộng"
+                  formControlName="width"
+                />
+                <span
+                  *ngIf="isSubmit && detailForm.controls.width?.errors?.['required']"
+                  class="text-danger rq-input"
+                  >Thông tin bắt buộc</span
+                >
+              </div>
+              <div class="col-4">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="giaoTrinhDetail.height"
+                  [readonly]="isReadOnly()"
+                  placeholder="Nhập chiều cao"
+                  formControlName="height"
+                />
+                <span
+                  *ngIf="isSubmit && detailForm.controls.height?.errors?.['required']"
+                  class="text-danger rq-input"
+                  >Thông tin bắt buộc</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="author" class="label"> Trọng lượng </label>
+            <input
+              type="text"
+              class="form-control"
+              id="author"
+              [(ngModel)]="giaoTrinhDetail.weight"
+              [readonly]="isReadOnly()"
+              placeholder="Nhập trọng lượng"
+              formControlName="weight"
+            />
+            <span
+              *ngIf="isSubmit && detailForm.controls.weight?.errors?.['required']"
+              class="text-danger rq-input"
+              >Thông tin bắt buộc</span
+            >
+          </div>
+          <div class="form-group">
+            <label for="description" class="label"> Mô tả </label>
+            <textarea
+              type="text"
+              class="form-control"
+              id="description"
+              [(ngModel)]="giaoTrinhDetail.description"
+              [readonly]="isReadOnly()"
+              placeholder="Nhập mô tả"
+              formControlName="description"
+              autosize
+              rows="4"
+            ></textarea>
+            <span
+              *ngIf="isSubmit && detailForm.controls.description?.errors?.['required']"
+              class="text-danger rq-input"
+              >Thông tin bắt buộc</span
+            >
+          </div>
+          <div class="form-group">
+            <label for="quantityRemaining" class="label"> Số lượng còn </label>
+            <input
+              type="text"
+              class="form-control"
+              id="quantityRemaining"
+              [(ngModel)]="giaoTrinhDetail.quantityRemaining"
+              [readonly]="isReadOnly()"
+              placeholder="Nhập số lượng còn"
+              formControlName="quantityRemaining"
+            />
+          </div>
+          <div class="form-group">
+            <label for="quantitySell" class="label"> Số lượng bán </label>
+            <input
+              type="text"
+              class="form-control"
+              id="quantitySell"
+              [(ngModel)]="giaoTrinhDetail.quantitySell"
+              [readonly]="isReadOnly()"
+              placeholder="Nhập số lượng bán"
+              formControlName="quantitySell"
+            />
+          </div>
+          <div class="form-group">
+            <label for="image" class="label">Ảnh đại diện</label>
+            <br />
+            <div class="my-image" *ngIf="!isReadOnly()">
+              <input
+                type="file"
+                class="form-control"
+                id="image"
+                formControlName="image"
+                (change)="onFileSelected($event)"
+              />
+              <label for="image">
+                <img [src]="image" width="100" style="max-height: 200px" />
+              </label>
+              <!-- {{image}} -->
+            </div>
+            <img
+              [src]="image"
+              *ngIf="isReadOnly()"
+              width="100"
+              style="max-height: 200px"
+            />
+
+            <span
+              *ngIf="isSubmit && detailForm.controls.image.errors?.['isRequired'] "
+              class="text-danger rq-input"
+            >
+              Thông tin bắt buộc
+            </span>
+            <!-- {{detailForm.controls.file.errors?.['isRequired']?'True':'False'}} -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row flex-center gap-24">
+      <button appBackButton type="button" class="btn btn-cancel">
+        Quay lại
+      </button>
+      <button type="submit" class="btn btn-allow">Lưu</button>
+    </div>
+  </div>
+</form>

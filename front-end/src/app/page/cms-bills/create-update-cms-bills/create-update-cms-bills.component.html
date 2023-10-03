@@ -1,0 +1,102 @@
+<form [formGroup]="detailForm" (ngSubmit)="submitDetail()">
+  <div class="box mb-32">
+    <div class="box-body">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label class="label"> Mã hóa đơn </label>
+            <input
+              type="text"
+              class="form-control"
+              [value]="billDetail.id"
+              [readonly]="!isCreate()"
+            />
+          </div>
+          <div class="form-group">
+            <label class="label"> Họ và tên người thanh toán </label>
+            <input
+              type="text"
+              class="form-control"
+              [value]="billDetail.name"
+              [readonly]="!isCreate()"
+            />
+          </div>
+          <div class="form-group">
+            <label for="phoneNumber" class="label"> Số điện thoại </label>
+            <input
+              type="text"
+              class="form-control"
+              id="phoneNumber"
+              [(ngModel)]="billDetail.phoneNumber"
+              [readonly]="isReadOnly()"
+              placeholder="Nhập số điện thoại liên hệ"
+              formControlName="phoneNumber"
+            />
+            <span
+              *ngIf="isSubmit && detailForm.controls.phoneNumber?.errors?.['required']"
+              class="text-danger rq-input"
+              >Thông tin bắt buộc</span
+            >
+          </div>
+          <div class="form-group">
+            <label class="label"> Trạng thái </label>
+            <div class="col label">
+              <label class="toggle-switch">
+                <input
+                  type="checkbox"
+                  [(ngModel)]="billStatus"
+                  formControlName="status"
+                />
+                <div class="slider"></div>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="mt-20 mt-lg-0 col-lg-6">
+          <div class="form-group">
+            <label class="label"> Hình thức thanh toán </label>
+            <ng-select
+              [(ngModel)]="billDetail.payment"
+              formControlName="payment"
+              [items]="paymentList"
+              bindLabel="label"
+              bindValue="value"
+            ></ng-select>
+          </div>
+          <div class="form-group">
+            <label for="address" class="label"> Địa chỉ </label>
+            <input
+              type="text"
+              class="form-control"
+              id="address"
+              [(ngModel)]="billDetail.address"
+              [readonly]="isReadOnly()"
+              placeholder="Nhập địa chỉ"
+              formControlName="address"
+            />
+            <span
+              *ngIf="isSubmit && detailForm.controls.address?.errors?.['required']"
+              class="text-danger rq-input"
+              >Thông tin bắt buộc</span
+            >
+          </div>
+          <div class="form-group">
+            <label class="label"> Ngày đặt hàng </label>
+            <input
+              type="text"
+              class="form-control"
+              [value]="billDetail.createdAt | date : 'short'"
+              [readonly]="!isCreate()"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row flex-center gap-24">
+      <button appBackButton type="button" class="btn btn-cancel">
+        Quay lại
+      </button>
+      <button type="submit" class="btn btn-allow">Lưu</button>
+    </div>
+  </div>
+</form>

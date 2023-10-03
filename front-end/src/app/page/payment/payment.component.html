@@ -1,0 +1,247 @@
+<div class="d-flex bills-container container">
+  <div class="left mr-2 w-100">
+    <div class="box">
+      <div class="bill-info__title">Phương thức thanh toán</div>
+      <div class="bill-info__payments">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="info__payment"
+            id="tien-mat"
+            value="Thanh toán tiền mặt khi nhận hàng"
+            [(ngModel)]="payment"
+          />
+          <label class="form-check-label payment" for="tien-mat">
+            <img src="assets/images/payment_1.png" alt="" />
+            Thanh toán tiền mặt khi nhận hàng
+          </label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="info__payment"
+            id="vnpay"
+            value="Thanh toán bằng VNPAY"
+            [(ngModel)]="payment"
+          />
+          <label class="form-check-label payment" for="vnpay">
+            <img src="assets/images/payment_5.png" alt="" />
+            Thanh toán bằng VNPAY
+          </label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="info__payment"
+            id="viettel-money"
+            value="Thanh toán bằng ví Viettel Money"
+            [(ngModel)]="payment"
+          />
+          <label class="form-check-label payment" for="viettel-money">
+            <img src="assets/images/payment_2.png" alt="" />
+            Thanh toán bằng ví Viettel Money
+          </label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="info__payment"
+            id="momo"
+            value="Thanh toán bằng ví MoMo"
+            [(ngModel)]="payment"
+          />
+          <label class="form-check-label payment" for="momo">
+            <img src="assets/images/payment_3.jpg" alt="" />
+            Thanh toán bằng ví MoMo
+          </label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="info__payment"
+            id="zaloPay"
+            value="Thanh toán bằng ví ZaloPay"
+            [(ngModel)]="payment"
+          />
+          <label class="form-check-label payment" for="zaloPay">
+            <img src="assets/images/payment_4.png" alt="" />
+            Thanh toán bằng ví ZaloPay
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="box mt-20">
+      <div class="bill-info">
+        <div class="bill-info__title">Thông tin đơn hàng</div>
+      </div>
+      <div class="cart-list-item" *ngFor="let item of billDetail.billDetails">
+        <div class="align-items-center cart-product" *ngIf="item.giaoTrinh">
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="flex-row-gap12 align-items-center w-100">
+              <div class="flex-shrink-0">
+                <a [routerLink]="['/product', item.giaoTrinh.id]">
+                  <img
+                    src="data:image/png;base64,{{ item.giaoTrinh.image }}"
+                    class="img-fluid"
+                    style="width: 80px"
+                /></a>
+              </div>
+              <div class="flex-grow-1 ms-3">
+                <a [routerLink]="['/product', item.giaoTrinh.id]"
+                  ><p class="product-name">{{ item.giaoTrinh.name }}</p></a
+                >
+                <div class="product-category">
+                  Phân loại giáo trình :
+                  <span>{{ item.giaoTrinh.category!.name }}</span>
+                </div>
+                <div class="product-count">Số lượng x{{ item.quantity }}</div>
+                <span class="new-price"
+                  >Đơn giá :
+                  {{
+                    item.giaoTrinh.price!.toFixed(0)
+                      | currency : "VND" : "symbol"
+                  }}
+                </span>
+              </div>
+            </div>
+            <span class="new-price">
+              {{
+                (item.giaoTrinh.sales && item.giaoTrinh.price
+                  ? ((item.giaoTrinh.price * (100 - item.giaoTrinh.sales)) /
+                      100) *
+                    item.quantity!
+                  : item.giaoTrinh.price! * item.quantity!
+                ).toFixed(0) | currency : "VND" : "symbol"
+              }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="box ml-2 w-320 right gap-10">
+    <div class="bill-info__title">Giao tới</div>
+    <div class="label">
+      {{ billDetail.name }} | {{ billDetail.phoneNumber }}
+    </div>
+    <div class="secondary-label">
+      <span class="material-icons-round"> place </span>
+      {{ billDetail.address }}
+    </div>
+    <div class="d-flex justify-content-between align-items-center total-price">
+      <h5 class="fw-bold mb-0">Tạm tính</h5>
+      <h5 class="fw-bold mb-0">
+        {{ billDetail.total?.toFixed(0) | currency : "VND" : "symbol" }}
+      </h5>
+    </div>
+    <div class="d-flex justify-content-between align-items-center">
+      <h5 class="fw-bold mb-0">Phí vận chuyển</h5>
+      <h5 class="fw-bold mb-0">
+        {{ transport.toFixed(0) | currency : "VND" : "symbol" }}
+      </h5>
+    </div>
+    <div class="d-flex justify-content-between align-items-center total-price">
+      <h5 class="fw-bold mb-0">Tổng thanh toán</h5>
+      <h5 class="fw-bold mb-0 new-price">
+        {{
+          billDetail.total && (billDetail.total + transport).toFixed(0)
+            | currency : "VND" : "symbol"
+        }}
+      </h5>
+    </div>
+    <button
+      class="btn btn-allow w-100 flex-center"
+      data-toggle="modal"
+      data-target="#paymentModal"
+    >
+      Thanh toán
+    </button>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="paymentModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="paymentModal"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-width" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">{{ payment }}</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex qr-content">
+          <div class="qr-content__left">
+            <div class="qr-content__code">
+              <img
+                height="220"
+                width="220"
+                style="height: 200px; width: 200px"
+                src="assets/images/qr_payment.png"
+              />
+            </div>
+            <div class="qr-content__amount">
+              <span>Tổng tiền:</span>
+              <b>
+                {{
+                  billDetail.total && (billDetail.total + transport).toFixed(0)
+                    | currency : "VND" : "symbol"
+                }}
+              </b>
+            </div>
+          </div>
+          <div class="qr-content__right">
+            <div class="qr-content__desc">
+              <h4>Quét mã QR để thanh toán</h4>
+              <div class="step-description">
+                <span class="step-number">1</span>
+                <p>Mở <b>ứng dụng ZaloPay</b> trên điện thoại</p>
+              </div>
+              <div class="step-description">
+                <span class="step-number">2</span>
+                <p>
+                  Trên ZaloPay, chọn biểu tượng<img
+                    src="https://salt.tikicdn.com/ts/upload/03/74/d4/01670f7f9e6a3c86583939eb2494e9cf.png"
+                    alt="icon"
+                  /><b>Quét mã QR</b>
+                </p>
+              </div>
+              <div class="step-description">
+                <span class="step-number">3</span>
+                <p>Quét mã QR ở trang này và thanh toán</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-cancel" data-dismiss="modal">
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-allow"
+          (click)="onPay()"
+          data-dismiss="modal"
+        >
+          Tiếp tục
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

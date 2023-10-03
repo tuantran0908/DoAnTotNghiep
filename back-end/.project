@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+<<<<<<< HEAD
+	<name>ib_sme_api</name>
+=======
+	<name>SourceCodeSME_API</name>
+>>>>>>> 7c2b3020766ce74e60e57d304b87a87c00cfef8c
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+	</buildSpec>
+	<natures>
+	</natures>
+</projectDescription>

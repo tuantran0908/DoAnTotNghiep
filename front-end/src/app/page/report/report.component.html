@@ -1,0 +1,255 @@
+<div class="row">
+  <div class="col-xl-8">
+    <div class="label">Thống kê</div>
+    <div class="row mt-2" *ngIf="totalQuantity">
+      <div class="col-lg-3">
+        <div class="card bg-teal-400">
+          <div class="card-body">
+            <div class="d-flex">
+              <h3 class="font-weight-semibold mb-0 count">
+                {{ totalQuantity["giaoTrinh"] }}
+              </h3>
+            </div>
+            <div>Tổng số giáo trình</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3">
+        <!-- Current server load -->
+        <div class="card bg-teal-400">
+          <div class="card-body">
+            <div class="d-flex">
+              <h3 class="font-weight-semibold mb-0 count">
+                {{ totalQuantity["review"] }}
+              </h3>
+            </div>
+            <div>Tổng số nhận xét</div>
+          </div>
+        </div>
+        <!-- /current server load -->
+      </div>
+
+      <div class="col-lg-3">
+        <!-- Today's revenue -->
+        <div class="card bg-teal-400">
+          <div class="card-body">
+            <div class="d-flex">
+              <h3 class="font-weight-semibold mb-0 count">
+                {{ totalQuantity["bill"] }}
+              </h3>
+            </div>
+            <div>Tổng số đơn hàng</div>
+          </div>
+        </div>
+        <!-- /today's revenue -->
+      </div>
+      <div class="col-lg-3">
+        <!-- Today's revenue -->
+        <div class="card bg-teal-400">
+          <div class="card-body">
+            <div class="d-flex">
+              <h3 class="font-weight-semibold mb-0 count">
+                {{
+                  totalQuantity["totalPayment"].toFixed(0)
+                    | currency : "VND" : "symbol"
+                }}
+              </h3>
+            </div>
+            <div>Tổng thu nhập</div>
+          </div>
+        </div>
+        <!-- /today's revenue -->
+      </div>
+    </div>
+    <div class="label">Giáo trình theo danh mục</div>
+    <div class="row mt-2">
+      <div id="chart" *ngIf="chartOptions">
+        <apx-chart
+          [series]="chartOptions.series!"
+          [chart]="chartOptions.chart!"
+          [labels]="chartOptions.labels"
+          [responsive]="chartOptions.responsive!"
+        ></apx-chart>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xl-4">
+    <div class="label">Dữ liệu gần đây</div>
+    <div class="card mt-2">
+      <div class="card-header header-elements-inline">
+        <div class="form-group mb-0 w-100">
+          <label class="label"> Chọn khoảng thời gian </label>
+          <ng-select
+            [items]="timeList"
+            [(ngModel)]="reportSearchRequest.dateFrom"
+            bindLabel="label"
+            bindValue="value"
+            (change)="search()"
+          ></ng-select>
+        </div>
+      </div>
+      <div class="card-body py-0">
+        <div class="row text-center"></div>
+      </div>
+      <div id="messages-stats"></div>
+      <ul
+        class="nav nav-tabs nav-tabs-solid nav-justified bg-indigo-400 border-x-0 border-bottom-0 border-top-indigo-300 mb-0"
+      >
+        <li class="nav-item">
+          <a
+            href="#giao-trinh"
+            class="nav-link font-size-sm bg-teal-400 text-uppercase active"
+            data-toggle="tab"
+            (click)="setSearchType('giao-trinh')"
+          >
+            Giáo trình
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a
+            href="#nhan-xet"
+            class="nav-link font-size-sm bg-teal-400 text-uppercase"
+            data-toggle="tab"
+            (click)="setSearchType('nhan-xet')"
+          >
+            Nhận xét
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a
+            href="#don-hang"
+            class="nav-link font-size-sm bg-teal-400 text-uppercase"
+            data-toggle="tab"
+            (click)="setSearchType('don-hang')"
+          >
+            Đơn hàng
+          </a>
+        </li>
+      </ul>
+      <div class="tab-content card-body">
+        <div class="tab-pane active fade show" id="giao-trinh">
+          <ul class="media-list">
+            <li
+              class="media"
+              *ngFor="let giaoTrinh of giaoTrinhs"
+              [routerLink]="['/cms/products/detail', giaoTrinh.id]"
+            >
+              <div class="mr-3">
+                <img
+                  src="data:image/png;base64,{{ giaoTrinh.image }}"
+                  width="36"
+                  height="36"
+                  alt=""
+                />
+              </div>
+              <div class="media-body">
+                <div class="d-flex justify-content-between">
+                  <span class="label">{{ giaoTrinh.name }}</span>
+                  <span class="font-size-sm text-muted">
+                    {{ giaoTrinh.category!.name }}
+                  </span>
+                </div>
+                <span class="text-muted">Tác giả : {{ giaoTrinh.author }}</span>
+              </div>
+            </li>
+            <div class="flex-center">
+              <button
+                type="button"
+                class="btn btn-allow mt-2"
+                [routerLink]="['/cms/products']"
+              >
+                Xem thêm
+              </button>
+            </div>
+          </ul>
+        </div>
+
+        <div class="tab-pane fade" id="nhan-xet">
+          <ul class="media-list">
+            <li
+              class="media"
+              *ngFor="let review of reviews"
+              [routerLink]="['/cms/reviews/detail', review.id]"
+            >
+              <div class="mr-3">
+                <img
+                  src="data:image/png;base64,{{ review.user!.avatar }}"
+                  width="36"
+                  class="rounded-circle"
+                  height="36"
+                  alt=""
+                />
+              </div>
+              <div class="media-body">
+                <div class="d-flex justify-content-between">
+                  <span class="label">{{ review.user!.fullname }}</span>
+                  <span class="font-size-sm text-muted">
+                    {{ review.createdAt | date : "short" }}
+                  </span>
+                </div>
+                <span class="text-muted"
+                  >Giáo trình : {{ review.giaoTrinh!.name }}</span
+                >
+              </div>
+            </li>
+            <div class="flex-center">
+              <button
+                type="button"
+                class="btn btn-allow mt-2"
+                [routerLink]="['/cms/reviews']"
+              >
+                Xem thêm
+              </button>
+            </div>
+          </ul>
+        </div>
+
+        <div class="tab-pane fade" id="don-hang">
+          <ul class="media-list">
+            <li
+              class="media"
+              *ngFor="let bill of bills"
+              [routerLink]="['/cms/bills/detail', bill.id]"
+            >
+              <div class="media-body">
+                <div class="d-flex justify-content-between">
+                  <span class="label">{{ bill.name }}</span>
+                  <span class="font-size-sm text-muted">
+                    {{ bill.createdAt | date : "short" }}
+                  </span>
+                </div>
+                <span class="text-muted"
+                  >{{ bill.payment }} :
+                  {{
+                    bill.total?.toFixed(0) | currency : "VND" : "symbol"
+                  }}</span
+                >
+                <div class="d-flex align-items-center text-muted">
+                  <span class="material-icons-round mr-2"> phone </span>
+                  {{ bill.phoneNumber }}
+                </div>
+                <div class="d-flex align-items-center text-muted">
+                  <span class="material-icons-round mr-2"> place </span>
+                  {{ bill.address }}
+                </div>
+              </div>
+            </li>
+            <div class="flex-center">
+              <button
+                type="button"
+                class="btn btn-allow mt-2"
+                [routerLink]="['/cms/bills']"
+              >
+                Xem thêm
+              </button>
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

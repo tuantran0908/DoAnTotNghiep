@@ -1,0 +1,107 @@
+<div class="box mb-32">
+  <div class="box-body flex-col-gap24">
+    <div class="row">
+      <div class="col-lg-6 flex-col-gap24">
+        <div class="row">
+          <div class="col-4 secondary-label">Mã giáo trình</div>
+          <div class="col-8 label">{{ giaoTrinhDetail.id }}</div>
+        </div>
+        <div class="row">
+          <div class="col-4 secondary-label">Loại giáo trình</div>
+          <div class="col-8 label">{{ giaoTrinhDetail.category?.name }}</div>
+        </div>
+        <div class="row">
+          <div class="col-4 secondary-label">Tên giáo trình</div>
+          <div class="col-8 label">{{ giaoTrinhDetail.name }}</div>
+        </div>
+        <div class="row">
+          <div class="col-4 secondary-label">Tác giả</div>
+          <div class="col-8 label">{{ giaoTrinhDetail.author }}</div>
+        </div>
+        <div class="row">
+          <div class="col-4 secondary-label">Ngày phát hành</div>
+          <div class="col-8 label">{{ giaoTrinhDetail.publicDate }}</div>
+        </div>
+        <div class="row">
+          <div class="col-4 secondary-label">Trạng thái</div>
+          <div class="col-8 label">{{ giaoTrinhDetail.status }}</div>
+        </div>
+        <div class="row">
+          <div class="col-4 secondary-label">Tình trạng</div>
+          <div class="col-8 label">{{ giaoTrinhDetail.isNew }}</div>
+        </div>
+        <div class="row">
+          <div class="col-4 secondary-label">Khuyến mại</div>
+          <div class="col-8 label">{{ giaoTrinhDetail.sales }} %</div>
+        </div>
+      </div>
+      <div class="mt-20 mt-lg-0 col-lg-6 flex-col-gap24">
+        <div class="row">
+          <div class="col-4 secondary-label">Giá bán</div>
+          <div class="col-8 label">{{ giaoTrinhDetail.price }}</div>
+        </div>
+        <div class="row">
+          <div class="col-4 secondary-label">Kích thước</div>
+          <div class="col-8 label">
+            {{ giaoTrinhDetail.length }} x {{ giaoTrinhDetail.width }} x
+            {{ giaoTrinhDetail.height }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4 secondary-label">Trọng lượng</div>
+          <div class="col-8 label">{{ giaoTrinhDetail.weight }}</div>
+        </div>
+        <div class="form-group">
+          <label for="phoneNumber" class="secondary-label"> Mô tả </label>
+          <div class="label">{{ giaoTrinhDetail.description }}</div>
+        </div>
+        <div class="form-group">
+          <label class="secondary-label"> Ảnh giáo trình </label>
+          <div>
+            <img src="data:image/png;base64,{{ giaoTrinhDetail.image }}" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <span class="high-light"></span>
+    <div class="row">
+      <div class="col-lg-6 flex-col-gap24">
+        <div class="row">
+          <div class="col-4 secondary-label">Người tạo</div>
+          <div class="col-8 label">
+            {{ giaoTrinhDetail.createdBy?.username }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4 secondary-label">Người cập nhật</div>
+          <div class="col-8 label">
+            {{ giaoTrinhDetail.updatedBy?.username }}
+          </div>
+        </div>
+      </div>
+      <div class="mt-20 mt-lg-0 col-lg-6 flex-col-gap24">
+        <div class="row">
+          <div class="col-4 secondary-label">Ngày tạo</div>
+          <div class="col-8 label">
+            {{ giaoTrinhDetail.createdAt | date : "short" }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4 secondary-label">Ngày cập nhật</div>
+          <div class="col-8 label">
+            {{ giaoTrinhDetail.updatedAt | date : "short" }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row flex-center gap-24">
+    <button appBackButton type="button" class="btn btn-cancel">Quay lại</button>
+    <button
+      class="btn btn-allow"
+      [routerLink]="['/cms/products/update', giaoTrinhDetail.id]"
+    >
+      Sửa
+    </button>
+  </div>
+</div>

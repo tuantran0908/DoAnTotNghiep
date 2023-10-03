@@ -1,0 +1,14 @@
+<ng-select
+  [items]="items$ | async"
+  bindLabel="label"
+  [multiple]="multiple"
+  [trackByFn]="trackByFn"
+  [loading]="loading"
+  notFoundText="Không tìm thấy dữ liệu"
+  [typeahead]="input$"
+  [(ngModel)]="value"
+  [readonly]="readonly"
+>
+</ng-select>
+
+<!-- {{value|json}} -->

@@ -1,0 +1,72 @@
+.bills-container {
+  margin-top: 80px;
+}
+.box {
+  background-color: #fff;
+  gap: 0;
+}
+.cart-list-item {
+  border-top: 1px solid var(--black-EAEBEC);
+  border-bottom: 1px solid var(--black-EAEBEC);
+  padding: 10px 0;
+}
+.product-overview img {
+  height: 100%;
+  object-fit: contain;
+  width: 100%;
+}
+.product-count {
+  margin-top: 4px;
+}
+
+.box-product__header {
+  padding: 10px 10px 10px 6px;
+}
+.new-price {
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--orange-FF7043);
+}
+.product-category > span {
+  color: var(--secondary-color);
+}
+.bill-info {
+  margin-bottom: 10px;
+}
+.bill-info__title {
+  font-size: 18px;
+  color: var(--primary-color);
+  text-align: center;
+  font-weight: 500;
+}
+.bill-info__label {
+  font-size: 14px;
+  color: var(--secondary-color);
+}
+.bill-info__content {
+  font-size: 16px;
+  color: var(--primary-color);
+  font-weight: 500;
+}
+.total-price {
+  margin-top: 10px;
+}
+.modal-body {
+  text-align: unset;
+}
+.form-group {
+  width: 100%;
+}
+.bill-status {
+  font-size: 20px;
+  font-weight: 500;
+}
+.a {
+  color: var(--green-56AB01);
+}
+.b {
+  color: var(--orange-FDA601);
+}
+.c {
+  color: var(--red-D50101);
+}

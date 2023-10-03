@@ -1,0 +1,129 @@
+<div class="page-content pt-0">
+  <app-product-sidebar></app-product-sidebar>
+  <!-- /main sidebar -->
+
+  <!-- Main content -->
+  <div class="content-wrapper">
+    <!-- Content area -->
+    <div class="content">
+      <div class="banner">
+        <div class="banner__main-banner">
+          <owl-carousel-o [options]="customOptionsBanner">
+            <ng-container *ngFor="let banner of banners">
+              <ng-template
+                class="slide"
+                carouselSlide
+                [id]="banner.id!.toString()"
+              >
+                <img [src]="banner.url" style="height: 300px" />
+              </ng-template>
+            </ng-container>
+          </owl-carousel-o>
+        </div>
+        <div class="banner__right-banner">
+          <a href="" class="banner__right-banner">
+            <img src="assets/images/banner_7.jpg" alt="" />
+          </a>
+          <a href="" class="banner__right-banner">
+            <img src="assets/images/banner_8.jpg" alt="" />
+          </a>
+        </div>
+      </div>
+      <section
+        *ngFor="let productsGroup of productsGroupList"
+        class="mt-32 box-product"
+      >
+        <div class="box-product__header">
+          <div class="box-product__header__title">
+            <span class="text-uppercase">{{ productsGroup.title }}</span>
+          </div>
+          <a
+            [routerLink]="[productsGroup.url]"
+            class="flex-center box-product__header__link"
+          >
+            Xem Tất Cả<span class="material-icons-outlined">
+              chevron_right
+            </span>
+          </a>
+        </div>
+        <div class="box-product__content">
+          <div class="box-grid">
+            <div class="product" *ngFor="let product of productsGroup.products">
+              <div
+                class="product__image"
+                [routerLink]="['/product', product.id]"
+              >
+                <span *ngIf="product.sales" class="discount"
+                  >{{ product.sales }}% off</span
+                >
+                <span class="new">new</span>
+                <!-- <div class="">{{ product.image }}</div> -->
+                <img src="data:image/png;base64,{{ product.image }}" />
+                <!-- <img [src]="product.image" /> -->
+              </div>
+              <div
+                class="product__detail"
+                [routerLink]="['/product', product.id]"
+              >
+                <p class="product-title">{{ product.name }}</p>
+                <div
+                  class="d-flex"
+                  *ngIf="product.sales && product.price; else elsePrice"
+                >
+                  <p class="product-old-price">
+                    {{
+                      product.price!.toFixed(0) | currency : "VND" : "symbol"
+                    }}
+                  </p>
+                  <p class="product-price">
+                    {{
+                      ((product.price! * (100 - product.sales!)) / 100).toFixed(
+                        0
+                      ) | currency : "VND" : "symbol"
+                    }}
+                  </p>
+                </div>
+                <ng-template #elsePrice>
+                  <div class="d-flex">
+                    <p class="product-price">
+                      {{
+                        product.price!.toFixed(0) | currency : "VND" : "symbol"
+                      }}
+                    </p>
+                  </div>
+                </ng-template>
+                <div class="product-review">
+                  <div class="rate">
+                    <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+                      <span
+                        class="material-icons"
+                        [class.checked]="
+                          product.avgStar && star <= product.avgStar
+                        "
+                      >
+                        star_rate
+                      </span>
+                    </ng-container>
+                  </div>
+                  <p class="product-quantity-sell">
+                    Đã bán {{ convertUnits(product.quantitySell!) }}
+                  </p>
+                </div>
+              </div>
+              <div class="product__btn">
+                <button
+                  class="btn btn-allow flex-center"
+                  (click)="onClickAddToCart(product)"
+                >
+                  <span class="material-icons-outlined"> shopping_cart </span>
+                  Thêm vào giỏ hàng
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <!-- /content area -->
+  </div>
+</div>

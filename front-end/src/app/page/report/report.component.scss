@@ -1,0 +1,35 @@
+.report-total__box {
+  padding: 15px;
+  border: 1px solid var(--blue-D9E6F2);
+  border-radius: 20px;
+  background: var(--primary-white);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0px 0px 32px rgba(151, 156, 168, 0.15);
+  &__title {
+    color: var(--primary-color);
+    font-weight: 500;
+    font-size: 16px;
+  }
+  &__body {
+    display: flex;
+    font-size: 30px;
+    font-weight: 500;
+    align-items: center;
+    span {
+      margin-right: 10px;
+      font-size: 30px;
+    }
+  }
+}
+.media {
+  cursor: pointer;
+}
+.card-body .count {
+  font-size: 28px;
+}
+
+.nav-link.active {
+  background-color: #18615a !important;
+}

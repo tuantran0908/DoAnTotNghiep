@@ -1,0 +1,66 @@
+<div class="box mb-32">
+  <div class="box-body flex-col-gap24">
+    <div class="row">
+      <div class="col-lg-6 flex-col-gap24">
+        <div class="row">
+          <div class="col-4 secondary-label">Mã loại giáo trình</div>
+          <div class="col-8 label">{{ categoryDetail.id }}</div>
+        </div>
+        <div class="row">
+          <div class="col-4 secondary-label">Tên loại giáo trình</div>
+          <div class="col-8 label">{{ categoryDetail.name }}</div>
+        </div>
+        <div class="row">
+          <div class="col-4 secondary-label">Trạng thái</div>
+          <div class="col-8 label">{{ categoryDetail.status }}</div>
+        </div>
+      </div>
+      <div class="mt-20 mt-lg-0 col-lg-6 flex-col-gap24">
+        <div class="form-group">
+          <label for="phoneNumber" class="secondary-label"> Mô tả </label>
+          <div class="label">{{ categoryDetail.description }}</div>
+        </div>
+      </div>
+    </div>
+    <span class="high-light"></span>
+    <div class="row">
+      <div class="col-lg-6 flex-col-gap24">
+        <div class="row">
+          <div class="col-4 secondary-label">Người tạo</div>
+          <div class="col-8 label">
+            {{ categoryDetail.createdBy?.username }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4 secondary-label">Người cập nhật</div>
+          <div class="col-8 label">
+            {{ categoryDetail.updatedBy?.username }}
+          </div>
+        </div>
+      </div>
+      <div class="mt-20 mt-lg-0 col-lg-6 flex-col-gap24">
+        <div class="row">
+          <div class="col-4 secondary-label">Ngày tạo</div>
+          <div class="col-8 label">
+            {{ categoryDetail.createdAt | date : "short" }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4 secondary-label">Ngày cập nhật</div>
+          <div class="col-8 label">
+            {{ categoryDetail.updatedAt | date : "short" }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row flex-center gap-24">
+    <button appBackButton type="button" class="btn btn-cancel">Quay lại</button>
+    <button
+      class="btn btn-allow"
+      [routerLink]="['/cms/category/update', categoryDetail.id]"
+    >
+      Sửa
+    </button>
+  </div>
+</div>

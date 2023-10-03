@@ -1,0 +1,106 @@
+<div class="sidebar sidebar-dark sidebar-main sidebar-fixed sidebar-expand-md">
+  <!-- Sidebar mobile toggler -->
+  <div class="sidebar-mobile-toggler text-center">
+    <a href="#" class="sidebar-mobile-main-toggle">
+      <i class="icon-arrow-left8"></i>
+    </a>
+    Navigation
+    <a href="#" class="sidebar-mobile-expand">
+      <i class="icon-screen-full"></i>
+      <i class="icon-screen-normal"></i>
+    </a>
+  </div>
+  <!-- /sidebar mobile toggler -->
+
+  <!-- Sidebar content -->
+  <div class="sidebar-content sidebar-dark">
+    <!-- User menu -->
+    <div class="sidebar-user">
+      <div class="card-body" *ngIf="user">
+        <div class="media" [routerLink]="['/profile', user.id]">
+          <div class="mr-3">
+            <img
+              src="data:image/png;base64,{{ user.avatar }}"
+              width="38"
+              height="38"
+              class="rounded-circle"
+              alt=""
+            />
+          </div>
+
+          <div class="media-body">
+            <div class="media-title font-weight-semibold">
+              {{ user.fullname }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /user menu -->
+
+    <!-- Main navigation -->
+    <div class="card card-sidebar-mobile">
+      <ul class="nav nav-sidebar" data-nav-type="accordion">
+        <!-- Main -->
+        <ng-container *ngFor="let sideBarGroup of sideBarGroups">
+          <li
+            *ngIf="sideBarGroup.sideBarItems.length > 1; else navItem"
+            class="nav-item nav-item-submenu"
+            [class.nav-item-expanded]="sideBarGroup.isExpanded"
+            [class.nav-item-open]="sideBarGroup.isExpanded"
+          >
+            <a href="/cms/report" class="nav-link">
+              <span class="material-icons sidebar-icon">{{
+                sideBarGroup.icon
+              }}</span>
+              <span>{{ sideBarGroup.title }}</span>
+            </a>
+            <ul class="nav nav-group-sub">
+              <li
+                *ngFor="let sideBarItem of sideBarGroup.sideBarItems"
+                class="nav-item"
+              >
+                <a
+                  [routerLink]="sideBarItem.url"
+                  class="nav-link"
+                  [class.active]="sideBarItem.isSelected"
+                  (click)="onClickSideBarItem(sideBarItem, sideBarGroup)"
+                >
+                  {{ sideBarItem.title }}
+                </a>
+              </li>
+            </ul>
+          </li>
+          <ng-template #navItem>
+            <li class="nav-item">
+              <a
+                [routerLink]="sideBarGroup.sideBarItems[0].url"
+                class="nav-link"
+                [class.active]="sideBarGroup.sideBarItems[0].isSelected"
+                (click)="
+                  onClickSideBarItem(sideBarGroup.sideBarItems[0], sideBarGroup)
+                "
+              >
+                <span class="material-icons sidebar-icon">{{
+                  sideBarGroup.icon
+                }}</span>
+                <span>{{ sideBarGroup.sideBarItems[0].title }}</span>
+              </a>
+            </li>
+          </ng-template>
+        </ng-container>
+
+        <!-- <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="icon-list-unordered"></i>
+            <span>Changelog</span>
+            <span class="badge bg-blue-400 align-self-center ml-auto">2.3</span>
+          </a>
+        </li> -->
+        <!-- /main -->
+      </ul>
+    </div>
+    <!-- /main navigation -->
+  </div>
+  <!-- /sidebar content -->
+</div>

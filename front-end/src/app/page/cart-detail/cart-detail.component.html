@@ -1,0 +1,214 @@
+<div class="product-detail-container">
+  <div class="container box mt-32">
+    <div class="text-black">
+      <div class="row">
+        <div class="col-lg-8">
+          <h3 class="mb-5 pt-2 text-center fw-bold text-uppercase">
+            Giỏ hàng của tôi
+          </h3>
+          <div class="box-product__header mb-3">
+            <div class="box-product__header__title flex-row-gap12">
+              <input
+                type="checkbox"
+                (change)="$event ? headerToggle() : null"
+                [checked]="selection.hasValue() && isAllSelected()"
+                [indeterminate]="selection.hasValue() && !isAllSelected()"
+              />
+              <span class="text-uppercase">SẢN PHẨM</span>
+            </div>
+          </div>
+
+          <div class="cart-list-item" *ngIf="asyncData">
+            <div
+              *ngFor="
+                let item of asyncData
+                  | paginate
+                    : {
+                        id: 'server',
+                        itemsPerPage: page.size,
+                        currentPage: page.curentPage,
+                        totalItems: total
+                      };
+                let i = index
+              "
+              class="mb-2 flex-row-gap12 align-items-center cart-product"
+            >
+              <input
+                type="checkbox"
+                (click)="$event.stopPropagation()"
+                (change)="$event ? itemToggle(item) : null"
+                [checked]="selection.isSelected(item)"
+              />
+              <div class="flex-row-gap12 align-items-center w-100">
+                <div class="flex-shrink-0">
+                  <a [routerLink]="['/product', item.giaoTrinh!.id]"
+                    ><img
+                      src="data:image/png;base64,{{ item.giaoTrinh!.image }}"
+                      class="img-fluid"
+                      style="width: 100px"
+                  /></a>
+                </div>
+                <div class="flex-grow-1 ms-3">
+                  <a [routerLink]="['/product', item.giaoTrinh!.id]">
+                    <p class="product-name">
+                      {{ item.giaoTrinh!.name }}
+                    </p>
+                  </a>
+                  <div
+                    *ngIf="
+                      item.giaoTrinh!.sales && item.giaoTrinh!.price;
+                      else elsePrice
+                    "
+                    class="product-price-discount"
+                  >
+                    <span class="new-price">{{
+                      (
+                        (item.giaoTrinh!.price! *
+                          (100 - item.giaoTrinh!.sales!)) /
+                        100
+                      ).toFixed(0) | currency : "VND" : "symbol"
+                    }}</span>
+                    <span class="old-price line-through">{{
+                      item.giaoTrinh!.price.toFixed(0)
+                        | currency : "VND" : "symbol"
+                    }}</span>
+                    <span class="sale-off"
+                      >{{ item.giaoTrinh!.sales }}% GIẢM</span
+                    >
+                  </div>
+                  <ng-template #elsePrice>
+                    <div class="product-price-discount">
+                      <span class="new-price">{{
+                        item.giaoTrinh!.price!.toFixed(0)
+                          | currency : "VND" : "symbol"
+                      }}</span>
+                    </div>
+                  </ng-template>
+                  <div class="product-count">
+                    <div class="d-flex align-items-center">
+                      <span class="mr-1">Số lượng</span>
+                      <div class="qtyminus" (click)="onClickSub(item)">-</div>
+                      <input
+                        type="text"
+                        name="quantity"
+                        [(ngModel)]="item.quantity"
+                        class="form-control qty"
+                      />
+                      <div class="qtyplus" (click)="onClickAdd(item)">+</div>
+                      <span class="ml-1"
+                        >{{
+                          convertUnits(item.giaoTrinh!.quantityRemaining!)
+                        }}
+                        giáo trình có sẵn</span
+                      >
+                    </div>
+                    <div class="total">
+                      Số tiền :
+                      <span class="new-price"
+                        >{{
+                          (item.giaoTrinh!.sales && item.giaoTrinh!.price
+                            ? ((item.giaoTrinh!.price! *
+                                (100 - item.giaoTrinh!.sales!)) /
+                                100) *
+                              item.quantity!
+                            : item.giaoTrinh!.price! * item.quantity!
+                          ).toFixed(0) | currency : "VND" : "symbol"
+                        }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <span
+                class="material-symbols-outlined"
+                (click)="confirmDelete(item.id, item.giaoTrinh!.name)"
+              >
+                delete
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <form [formGroup]="billForm">
+            <h3 class="mb-5 pt-2 text-center fw-bold text-uppercase">
+              THANH TOÁN
+            </h3>
+            <div class="form-group">
+              <label for="name" class="label"> Họ và Tên </label>
+              <input
+                id="name"
+                type="text"
+                class="form-control"
+                [(ngModel)]="bill.name"
+                formControlName="name"
+              />
+              <span
+                *ngIf="isSubmit && billForm.controls.name?.errors?.['required']"
+                class="text-danger rq-input"
+                >Thông tin bắt buộc</span
+              >
+            </div>
+            <div class="form-group">
+              <label for="phoneNumber" class="label"> Số điện thoại </label>
+              <input
+                id="phoneNumber"
+                type="text"
+                class="form-control"
+                [(ngModel)]="bill.phoneNumber"
+                formControlName="phoneNumber"
+              />
+              <span
+                *ngIf="isSubmit && billForm.controls.phoneNumber?.errors?.['required']"
+                class="text-danger rq-input"
+                >Thông tin bắt buộc</span
+              >
+            </div>
+            <div class="form-group">
+              <label for="address" class="label"> Địa chỉ </label>
+              <input
+                id="address"
+                type="text"
+                class="form-control"
+                [(ngModel)]="bill.address"
+                formControlName="address"
+              />
+              <span
+                *ngIf="isSubmit && billForm.controls.address?.errors?.['required']"
+                class="text-danger rq-input"
+                >Thông tin bắt buộc</span
+              >
+            </div>
+            <div class="d-flex justify-content-between p-2 mb-2">
+              <p class="fw-bold">Tổng tiền hàng:</p>
+              <p class="fw-bold">
+                {{ oldTotalPrice.toFixed(0) | currency : "VND" : "symbol" }}
+              </p>
+            </div>
+            <div class="d-flex justify-content-between p-2 mb-2">
+              <p class="fw-bold">Giảm giá giáo trình:</p>
+              <p class="fw-bold">
+                {{ salePrice.toFixed(0) | currency : "VND" : "symbol" }}
+              </p>
+            </div>
+            <div
+              class="d-flex justify-content-between p-2 mb-2"
+              style="background-color: #e1f5fe"
+            >
+              <h5 class="fw-bold mb-0">Tổng thanh toán:</h5>
+              <h5 class="fw-bold mb-0">
+                {{ finalTotalPrice.toFixed(0) | currency : "VND" : "symbol" }}
+              </h5>
+            </div>
+            <button
+              [disabled]="!selection.selected.length"
+              class="btn btn-allow w-100 flex-center"
+              (click)="onPay()"
+            >
+              Mua hàng ( {{ selection.selected.length }} )
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

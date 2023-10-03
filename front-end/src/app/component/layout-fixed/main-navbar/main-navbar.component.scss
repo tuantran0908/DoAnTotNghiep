@@ -1,0 +1,18 @@
+.navbar-custom {
+  height: 3.12503rem;
+}
+.navbar-brand {
+  padding: 0;
+}
+.navbar-brand img {
+  height: 3rem;
+}
+@media (min-width: 768px) {
+  .navbar-expand-md .navbar-brand {
+    min-width: 14.4rem;
+  }
+}
+.dropdown-item > span {
+  font-size: 1rem;
+  margin-right: 1rem;
+}

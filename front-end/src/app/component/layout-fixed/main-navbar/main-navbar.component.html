@@ -1,0 +1,84 @@
+<div class="navbar navbar-expand-md navbar-dark fixed-top navbar-custom">
+  <div class="navbar-brand">
+    <a href="/cms" class="d-inline-block">
+      <img src="assets/images/logo.webp" alt="" />
+    </a>
+  </div>
+
+  <div class="d-md-none">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbar-mobile"
+    >
+      <i class="icon-tree5"></i>
+    </button>
+    <button class="navbar-toggler sidebar-mobile-main-toggle" type="button">
+      <i class="icon-paragraph-justify3"></i>
+    </button>
+  </div>
+
+  <div class="collapse navbar-collapse" id="navbar-mobile">
+    <!-- <ul class="navbar-nav">
+      <li class="nav-item">
+        <a
+          href="#"
+          class="navbar-nav-link sidebar-control sidebar-main-toggle d-none d-md-block"
+        >
+          <i class="icon-paragraph-justify3"></i>
+        </a>
+      </li>
+    </ul> -->
+
+    <ul class="navbar-nav ml-auto">
+      <!-- <li class="nav-item">
+        <a href="#" class="navbar-nav-link"> Text link </a>
+      </li> -->
+
+      <li class="nav-item dropdown">
+        <a href="#" class="navbar-nav-link">
+          <span class="material-symbols-outlined"> notifications </span>
+          <!-- <i class="icon-bell2"></i>
+          <span class="d-md-none ml-2">Notifications</span>
+          <span class="badge badge-mark border-white ml-auto ml-md-0"></span> -->
+        </a>
+      </li>
+
+      <li class="nav-item dropdown dropdown-user">
+        <a
+          href="#"
+          class="navbar-nav-link d-flex align-items-center dropdown-toggle"
+          data-toggle="dropdown"
+          *ngIf="user"
+        >
+          <img
+            src="data:image/png;base64,{{ user.avatar }}"
+            class="rounded-circle mr-2"
+            height="34"
+            alt=""
+          />
+          <span>{{ user.fullname }}</span>
+        </a>
+
+        <div class="dropdown-menu dropdown-menu-right">
+          <a
+            *ngIf="user"
+            [routerLink]="['/profile', user!.id]"
+            class="dropdown-item"
+          >
+            <i class="icon-cog5"></i> Thông tin cá nhân
+          </a>
+          <a [routerLink]="['/home-page']" class="dropdown-item">
+            <span class="material-icons-round"> home </span>
+            Trang người dùng
+          </a>
+          <div class="dropdown-divider"></div>
+          <a routerLink="login" class="dropdown-item"
+            ><i class="icon-switch2"></i> Đăng xuất</a
+          >
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

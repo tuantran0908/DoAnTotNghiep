@@ -1,0 +1,102 @@
+<div class="box mb-32">
+  <div class="box-body flex-col-gap24">
+    <div class="row">
+      <div class="col-lg-6 flex-col-gap24">
+        <div class="row">
+          <div class="col-4 secondary-label">Mã nhóm quyền</div>
+          <div class="col-8 label">{{ rolesGroupDetail.id }}</div>
+        </div>
+        <div class="row">
+          <div class="col-4 secondary-label">Tên nhóm quyền</div>
+          <div class="col-8 label">{{ rolesGroupDetail.name }}</div>
+        </div>
+        <div class="row">
+          <div class="col-4 secondary-label">Trạng thái</div>
+          <div class="col-8 label">{{ rolesGroupDetail.status }}</div>
+        </div>
+      </div>
+      <div class="mt-20 mt-lg-0 col-lg-6 flex-col-gap24">
+        <div class="form-group">
+          <label for="phoneNumber" class="secondary-label"> Mô tả </label>
+          <div class="label">{{ rolesGroupDetail.description }}</div>
+        </div>
+      </div>
+    </div>
+    <span class="high-light"></span>
+    <div class="row">
+      <div class="col-lg-6 flex-col-gap24">
+        <div class="row">
+          <div class="col-4 secondary-label">Người tạo</div>
+          <div class="col-8 label">
+            {{ rolesGroupDetail.createdBy?.username }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4 secondary-label">Người cập nhật</div>
+          <div class="col-8 label">
+            {{ rolesGroupDetail.updatedBy?.username }}
+          </div>
+        </div>
+      </div>
+      <div class="mt-20 mt-lg-0 col-lg-6 flex-col-gap24">
+        <div class="row">
+          <div class="col-4 secondary-label">Ngày tạo</div>
+          <div class="col-8 label">
+            {{ rolesGroupDetail.createdAt | date : "short" }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4 secondary-label">Ngày cập nhật</div>
+          <div class="col-8 label">
+            {{ rolesGroupDetail.updatedAt | date : "short" }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="label"> Nhóm quyền </label>
+      <div class="col-lg-11 role-table">
+        <div class="row role-table__header">
+          <div class="flex-center">Quyền</div>
+        </div>
+        <div class="role-table__content">
+          <div
+            class="row function parent-function"
+            *ngFor="let role of rolesList"
+          >
+            <input
+              [disabled]="isReadOnly()"
+              type="checkbox"
+              [checked]="role.value"
+              [attr.id]="
+                rolesGroupDetail.id != undefined && role.id != undefined
+                  ? rolesGroupDetail.id + role.id
+                  : null
+              "
+              class="mr-6"
+            />
+            <label
+              class="form-check-label"
+              [attr.for]="
+                rolesGroupDetail.id != undefined && role.id != undefined
+                  ? rolesGroupDetail.id + role.id
+                  : null
+              "
+            >
+              {{ role.name }}
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row flex-center gap-24">
+    <button appBackButton type="button" class="btn btn-cancel">Quay lại</button>
+    <button
+      class="btn btn-allow"
+      [routerLink]="['/cms/role-group/update', rolesGroupDetail.id]"
+    >
+      Sửa
+    </button>
+  </div>
+</div>

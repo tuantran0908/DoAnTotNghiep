@@ -1,0 +1,76 @@
+<form [formGroup]="detailForm" (ngSubmit)="submitDetail()">
+  <div class="box mb-32">
+    <div class="box-body">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label class="label"> Mã quyền </label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="rolesDetail.id"
+              [readonly]="!isCreate()"
+              formControlName="id"
+            />
+          </div>
+          <div class="form-group">
+            <label for="name" class="label"> Tên quyền </label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              [(ngModel)]="rolesDetail.name"
+              [readonly]="isReadOnly()"
+              placeholder="Nhập tên quyền"
+              formControlName="name"
+            />
+            <span
+              *ngIf="isSubmit && detailForm.controls.name?.errors?.['required']"
+              class="text-danger rq-input"
+              >Thông tin bắt buộc</span
+            >
+          </div>
+          <div class="form-group">
+            <label class="label"> Trạng thái </label>
+            <div class="col label">
+              <label class="toggle-switch">
+                <input
+                  type="checkbox"
+                  [(ngModel)]="rolesStatus"
+                  formControlName="status"
+                />
+                <div class="slider"></div>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="mt-20 mt-lg-0 col-lg-6">
+          <div class="form-group">
+            <label for="description" class="label"> Mô tả </label>
+            <textarea
+              class="form-control"
+              id="description"
+              [(ngModel)]="rolesDetail.description"
+              [readonly]="isReadOnly()"
+              placeholder="Nhập mô tả"
+              formControlName="description"
+              autosize
+              rows="4"
+            ></textarea>
+            <span
+              *ngIf="isSubmit && detailForm.controls.description?.errors?.['required']"
+              class="text-danger rq-input"
+              >Thông tin bắt buộc</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row flex-center gap-24">
+      <button appBackButton type="button" class="btn btn-cancel">
+        Quay lại
+      </button>
+      <button type="submit" class="btn btn-allow">Lưu</button>
+    </div>
+  </div>
+</form>

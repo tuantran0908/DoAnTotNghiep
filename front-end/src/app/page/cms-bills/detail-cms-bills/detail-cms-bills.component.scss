@@ -1,0 +1,28 @@
+.high-light {
+  height: 2px;
+  display: block;
+  background: var(--black-EAEBEC);
+}
+.label {
+  word-wrap: break-word;
+}
+.cart-list-item {
+  border-top: 1px solid var(--black-EAEBEC);
+  border-bottom: 1px solid var(--black-EAEBEC);
+  padding: 10px 0;
+  cursor: pointer;
+}
+.product-count {
+  margin-top: 4px;
+}
+.new-price {
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--orange-FF7043);
+}
+.product-category > span {
+  color: var(--secondary-color);
+}
+.total-price {
+  margin-top: 10px;
+}

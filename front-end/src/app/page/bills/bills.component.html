@@ -1,0 +1,93 @@
+<div class="bills-container container">
+  <div *ngIf="asyncData">
+    <div
+      class="box mt-32"
+      *ngFor="
+        let bill of asyncData
+          | paginate
+            : {
+                id: 'server',
+                itemsPerPage: page.size,
+                currentPage: page.curentPage,
+                totalItems: total
+              };
+        let i = index
+      "
+    >
+      <div class="cart-list-item" *ngFor="let item of bill.billDetails">
+        <div class="align-items-center cart-product">
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="flex-row-gap12 align-items-center w-100">
+              <div class="flex-shrink-0">
+                <img
+                  src="data:image/png;base64,{{ item.giaoTrinh!.image }}"
+                  class="img-fluid"
+                  style="width: 80px"
+                />
+              </div>
+              <div class="flex-grow-1 ms-3">
+                <div class="product-name">{{ item.giaoTrinh!.name }}</div>
+                <div class="product-category">
+                  Phân loại giáo trình :
+                  <span>{{ item.giaoTrinh!.category!.name }}</span>
+                </div>
+                <div class="product-count">Số lượng x{{ item.quantity }}</div>
+                <span class="new-price"
+                  >Đơn giá :
+                  {{
+                    item.giaoTrinh!.price?.toFixed(0)
+                      | currency : "VND" : "symbol"
+                  }}
+                </span>
+              </div>
+            </div>
+            <span class="new-price"
+              >{{
+                (item.giaoTrinh!.sales && item.giaoTrinh!.price
+                  ? ((item.giaoTrinh!.price! * (100 - item.giaoTrinh!.sales!)) /
+                      100) *
+                    item.quantity!
+                  : item.giaoTrinh!.price! * item.quantity!
+                ).toFixed(0) | currency : "VND" : "symbol"
+              }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="total-price">
+        <!-- <div class="d-flex justify-content-between mb-2">
+          <p class="fw-bold">Tổng tiền hàng:</p>
+          <p class="fw-bold">
+            {{ oldTotalPrice.toFixed(0) | currency : "VND" : "symbol" }}
+          </p>
+        </div>
+        <div class="d-flex justify-content-between mb-2">
+          <p class="fw-bold">Giảm giá giáo trình:</p>
+          <p class="fw-bold">
+            {{ salePrice.toFixed(0) | currency : "VND" : "symbol" }}
+          </p>
+        </div> -->
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="bill-btn flex-row-gap12">
+            <button
+              type="button"
+              class="btn btn-allow"
+              [routerLink]="[bill.id]"
+            >
+              Xem chi tiết đơn
+            </button>
+          </div>
+          <div
+            class="d-flex justify-content-end align-items-center"
+            style="background-color: #e1f5fe"
+          >
+            <h5 class="fw-bold mb-0 mr-1">Tổng thanh toán</h5>
+            <h5 class="fw-bold mb-0 new-price">
+              {{ bill.total?.toFixed(0) | currency : "VND" : "symbol" }}
+            </h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

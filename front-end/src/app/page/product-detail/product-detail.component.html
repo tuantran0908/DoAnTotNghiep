@@ -1,0 +1,236 @@
+<div class="product-detail-container">
+  <div class="container box mt-32">
+    <div class="row product-overview">
+      <div class="col-md-6 flex-center">
+        <img src="data:image/png;base64,{{ product.image }}" />
+      </div>
+      <div class="col-md-6">
+        <div class="product-dtl">
+          <div class="product-info">
+            <div class="product-name">{{ product.name }}</div>
+            <div class="reviews-counter">
+              <div class="rate">
+                <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+                  <span
+                    class="material-icons"
+                    [class.checked]="avgStar && star <= avgStar"
+                  >
+                    star_rate
+                  </span>
+                </ng-container>
+              </div>
+              <span class="count-review">3 Reviews</span>
+              <span>{{ convertUnits(product.quantitySell!) }} đã bán</span>
+            </div>
+            <div
+              *ngIf="product.sales && product.price; else elsePrice"
+              class="product-price-discount"
+            >
+              <span class="new-price">{{
+                ((product.price * (100 - product.sales)) / 100).toFixed(0)
+                  | currency : "VND" : "symbol"
+              }}</span>
+              <span class="old-price line-through">{{ product.price }}</span>
+              <span class="sale-off">{{ product.sales }}% GIẢM</span>
+            </div>
+            <ng-template #elsePrice>
+              <div class="product-price-discount">
+                <span class="new-price">
+                  {{
+                    product.price?.toFixed(0) | currency : "VND" : "symbol"
+                  }}</span
+                >
+              </div>
+            </ng-template>
+          </div>
+          <p class="product__description">
+            {{ product.description }}
+          </p>
+          <div class="product-count">
+            <form action="#" class="d-flex align-items-center">
+              <span>Số lượng</span>
+              <div class="ml-2 qtyminus" (click)="onClickSub(product)">-</div>
+              <input
+                type="text"
+                name="quantity"
+                [(ngModel)]="quantity"
+                class="form-control qty"
+              />
+              <div class="mr-2 qtyplus" (click)="onClickAdd(product)">+</div>
+              <span
+                >{{ convertUnits(product.quantityRemaining!) }} giáo trình có
+                sẵn</span
+              >
+            </form>
+            <button
+              class="btn btn-allow flex-center mt-20"
+              (click)="onClickAddToCart(product)"
+            >
+              <span class="material-icons-outlined"> shopping_cart </span>
+              Thêm vào giỏ hàng
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container box mt-20">
+    <div class="product-detail">
+      <div class="product-detail__heading">CHI TIẾT SẢN PHẨM</div>
+      <div class="flex-col-gap12 product-detail__content">
+        <div class="row">
+          <div class="col-3 secondary-label">Loại giáo trình</div>
+          <div class="col-9 label">{{ product.category?.name }}</div>
+        </div>
+        <div class="row">
+          <div class="col-3 secondary-label">Tên giáo trình</div>
+          <div class="col-9 label">{{ product.name }}</div>
+        </div>
+        <div class="row">
+          <div class="col-3 secondary-label">Tác giả</div>
+          <div class="col-9 label">{{ product.author }}</div>
+        </div>
+        <div class="row">
+          <div class="col-3 secondary-label">Ngày phát hành</div>
+          <div class="col-9 label">{{ product.publicDate }}</div>
+        </div>
+        <div class="row">
+          <div class="col-3 secondary-label">Kích thước chiều dài</div>
+          <div class="col-9 label">{{ product.length }} cm</div>
+        </div>
+        <div class="row">
+          <div class="col-3 secondary-label">Kích thước chiều rộng</div>
+          <div class="col-9 label">{{ product.width }} cm</div>
+        </div>
+        <div class="row">
+          <div class="col-3 secondary-label">Kích thước chiều cao</div>
+          <div class="col-9 label">{{ product.height }} cm</div>
+        </div>
+        <div class="row">
+          <div class="col-3 secondary-label">Trọng lượng</div>
+          <div class="col-9 label">{{ product.weight }} gram</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container box mt-20">
+    <div class="product-review">
+      <div class="review-heading">ĐÁNH GIÁ SẢN PHẨM</div>
+      <div
+        class="d-flex align-items-center justify-content-between product-rating-overview"
+      >
+        <div class="mr-2 product-rating-overview__briefing">
+          <div class="product-rating-overview__score-wrapper">
+            <span class="product-rating-overview__rating-score">
+              {{ avgStar!.toFixed(1) }}
+            </span>
+            <span class="product-rating-overview__rating-score-out-of">
+              / 5
+            </span>
+          </div>
+          <div class="product-rating-overview__stars">
+            <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+              <span
+                class="material-icons"
+                [class.checked]="avgStar && star <= avgStar"
+              >
+                star_rate
+              </span>
+            </ng-container>
+          </div>
+        </div>
+        <div class="ml-2 flex-row-gap12 product-rating-overview__filters">
+          <button
+            class="btn btn-allow btn_sort flex-center"
+            [class.deactive]="optionSearch != 'tat-ca'"
+            (click)="onClickOptionSearch('tat-ca')"
+          >
+            Tất cả
+          </button>
+          <button
+            class="btn btn-allow btn_sort flex-center"
+            [class.deactive]="optionSearch != '5-sao'"
+            (click)="onClickOptionSearch('5-sao')"
+          >
+            5 sao
+          </button>
+          <button
+            class="btn btn-allow btn_sort flex-center"
+            [class.deactive]="optionSearch != '4-sao'"
+            (click)="onClickOptionSearch('4-sao')"
+          >
+            4 sao
+          </button>
+          <button
+            class="btn btn-allow btn_sort flex-center"
+            [class.deactive]="optionSearch != '3-sao'"
+            (click)="onClickOptionSearch('3-sao')"
+          >
+            3 sao
+          </button>
+          <button
+            class="btn btn-allow btn_sort flex-center"
+            [class.deactive]="optionSearch != '2-sao'"
+            (click)="onClickOptionSearch('2-sao')"
+          >
+            2 sao
+          </button>
+          <button
+            class="btn btn-allow btn_sort flex-center"
+            [class.deactive]="optionSearch != '1-sao'"
+            (click)="onClickOptionSearch('1-sao')"
+          >
+            1 sao
+          </button>
+        </div>
+      </div>
+      <div class="product-comments__list" *ngIf="asyncData">
+        <div
+          class="d-flex product-comment"
+          *ngFor="
+            let comment of asyncData
+              | paginate
+                : {
+                    id: 'server',
+                    itemsPerPage: page.size,
+                    currentPage: page.curentPage,
+                    totalItems: total
+                  }
+          "
+        >
+          <img
+            src="data:image/png;base64,{{ comment.user!.avatar }}"
+            class="rounded-circle mr-2"
+            height="40"
+            alt=""
+          />
+          <div class="flex-col-gap5 product-comment__main">
+            <div class="product-comment__author">
+              {{ comment.user!.fullname }}
+            </div>
+            <div class="a-flex align-items-center product-comment__rate">
+              <ng-container *ngFor="let star of [].constructor(comment.star)">
+                <span class="material-icons"> star_rate </span>
+              </ng-container>
+            </div>
+            <div class="product-comment__time">
+              {{ comment.createdAt | date : "short" }}
+            </div>
+            <div class="product-comment__message">{{ comment.message }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-32 flex-center box-product__more">
+        <pagination-controls
+          id="server"
+          [maxSize]="maxSize"
+          [autoHide]="autoHide"
+          [responsive]="responsive"
+          [previousLabel]="labels.previousLabel"
+          [nextLabel]="labels.nextLabel"
+          (pageChange)="search($event)"
+        ></pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>
